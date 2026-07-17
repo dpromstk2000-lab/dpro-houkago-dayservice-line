@@ -965,7 +965,7 @@
     }
   </style>
 
-  <script src="./config.js?v=HOUKAGO-4-CONFIG-COMPLETE-20260717"></script>
+  <script src="./config.js?v=HOUKAGO-4-R1-CONFIG-WORKER-VERSION-20260717"></script>
 </head>
 
 <body>
@@ -1448,7 +1448,7 @@
       "use strict";
 
       const SCREEN_VERSION =
-        "HOUKAGO-5-SYSTEM-CHECK-DEMO-PREPARE-20260717";
+        "HOUKAGO-5-R1-DEMO-DATE-TABLE-CHECK-FIX-20260717";
       const CONFIG =
         window.DPRO_HOUKAGO_CONFIG ||
         window.DPRO_HOUKAGO ||
@@ -1809,9 +1809,9 @@
 
         const configOk =
           CONFIG.APP.appVersion ===
-            "HOUKAGO-4-CONFIG-COMPLETE-20260717" &&
+            "HOUKAGO-4-R1-CONFIG-WORKER-VERSION-20260717" &&
           CONFIG.APP.workerVersion ===
-            "HOUKAGO-3-WORKER-API-COMPLETE-20260717" &&
+            "HOUKAGO-3-R1-WORKER-DEMO-DATE-INTEGRATION-FIX-20260717" &&
           CONFIG.URLS.workerBase.includes(
             "dpro-houkago-dayservice-line-api"
           );
@@ -2301,10 +2301,23 @@
       }
 
       function addDaysJst(dateText, days) {
+        const parts = String(dateText)
+          .split("-")
+          .map(Number);
+
+        if (
+          parts.length !== 3 ||
+          parts.some(Number.isNaN)
+        ) {
+          throw new Error("日付が正しくありません。");
+        }
+
         const date = new Date(
-          `${dateText}T00:00:00+09:00`
+          Date.UTC(parts[0], parts[1] - 1, parts[2])
         );
-        date.setUTCDate(date.getUTCDate() + Number(days));
+        date.setUTCDate(
+          date.getUTCDate() + Number(days || 0)
+        );
         return date.toISOString().slice(0, 10);
       }
 
