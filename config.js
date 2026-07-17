@@ -3,7 +3,7 @@
  * DPRO 放課後等デイサービス LINE
  * STEP HOUKAGO-4
  * 共通設定 config.js 完全版
- * Version: HOUKAGO-4-R3-CONFIG-WORKER-VERSION-20260717
+ * Version: HOUKAGO-4-R4-CONFIG-WORKER-VERSION-20260717
  * ============================================================
  *
  * GitHub配置先:
@@ -27,8 +27,8 @@
     serviceName: "DPRO 放課後等デイサービス LINE",
     shortName: "DPRO放課後等デイ",
     subtitle: "保護者連絡・利用予定・送迎・日々の支援共有をLINEで一元管理",
-    appVersion: "HOUKAGO-4-R3-CONFIG-WORKER-VERSION-20260717",
-    workerVersion: "HOUKAGO-3-R3-WORKER-DEMO-SAFE-UPSERT-FIX-20260717",
+    appVersion: "HOUKAGO-4-R4-CONFIG-WORKER-VERSION-20260717",
+    workerVersion: "HOUKAGO-3-R4-WORKER-DEMO-RESET-REBUILD-20260717",
     facilityCode: "dpro_houkago_demo",
     facilityName: "DPRO放課後等デイサービス",
     corporationName: "DPRO福祉サポート",
