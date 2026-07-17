@@ -965,7 +965,7 @@
     }
   </style>
 
-  <script src="./config.js?v=HOUKAGO-4-R2-CONFIG-WORKER-VERSION-20260717"></script>
+  <script src="./config.js?v=HOUKAGO-4-R3-CONFIG-WORKER-VERSION-20260717"></script>
 </head>
 
 <body>
@@ -1094,7 +1094,7 @@
           <h3>営業前に実行（再実行可能）</h3>
           <p>
             本番施設ではproduction guardにより実行できません。
-            デモ施設だけに営業確認用データを作成します。すでに存在する場合は同じ日付の内容を更新します。
+            デモ施設だけに営業確認用データを作成します。すでに存在する場合は、対象データを検索して同じ日付の内容を安全に更新します。
           </p>
 
           <div class="demo-actions">
@@ -1448,7 +1448,7 @@
       "use strict";
 
       const SCREEN_VERSION =
-        "HOUKAGO-5-R2-DEMO-IDEMPOTENT-FIX-20260717";
+        "HOUKAGO-5-R3-DEMO-SAFE-UPSERT-FIX-20260717";
       const CONFIG =
         window.DPRO_HOUKAGO_CONFIG ||
         window.DPRO_HOUKAGO ||
@@ -1809,9 +1809,9 @@
 
         const configOk =
           CONFIG.APP.appVersion ===
-            "HOUKAGO-4-R2-CONFIG-WORKER-VERSION-20260717" &&
+            "HOUKAGO-4-R3-CONFIG-WORKER-VERSION-20260717" &&
           CONFIG.APP.workerVersion ===
-            "HOUKAGO-3-R2-WORKER-DEMO-IDEMPOTENT-FIX-20260717" &&
+            "HOUKAGO-3-R3-WORKER-DEMO-SAFE-UPSERT-FIX-20260717" &&
           CONFIG.URLS.workerBase.includes(
             "dpro-houkago-dayservice-line-api"
           );
