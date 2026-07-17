@@ -1,0 +1,2845 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#147d79">
+  <meta name="robots" content="noindex,nofollow">
+  <title>DPRO 放課後等デイサービス LINE｜営業前システムチェック</title>
+
+  <style>
+    :root {
+      --bg: #f7f4ec;
+      --surface: #ffffff;
+      --surface-soft: #edf8f7;
+      --surface-blue: #eef6fb;
+      --surface-warm: #fff8e8;
+      --line: #cddeda;
+      --line-strong: #a8c7c2;
+      --text: #18312f;
+      --muted: #5d716f;
+      --brand: #147d79;
+      --brand-dark: #0c5c59;
+      --brand-deep: #073f3d;
+      --brand-soft: #dff3f1;
+      --blue: #2c83a5;
+      --blue-soft: #e4f3f9;
+      --success: #247a4c;
+      --success-soft: #e7f6ed;
+      --warning: #a46308;
+      --warning-soft: #fff1d5;
+      --danger: #b5362f;
+      --danger-soft: #fdecea;
+      --purple: #6f4ba5;
+      --purple-soft: #f0eafb;
+      --gray-soft: #eef2f1;
+      --shadow: 0 14px 38px rgba(24, 49, 47, .09);
+      --shadow-soft: 0 8px 25px rgba(24, 49, 47, .055);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(20, 125, 121, .10), transparent 34rem),
+        radial-gradient(circle at bottom left, rgba(44, 131, 165, .07), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Sans",
+        "Yu Gothic UI",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    a,
+    input {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page-shell {
+      width: min(1380px, calc(100% - 34px));
+      margin: 0 auto;
+      padding: 26px 0 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      flex: 0 0 auto;
+      border-radius: 17px;
+      background: linear-gradient(145deg, var(--brand), var(--brand-deep));
+      color: #fff;
+      font-size: 22px;
+      font-weight: 900;
+      box-shadow: 0 11px 26px rgba(20, 125, 121, .25);
+    }
+
+    .brand-name {
+      margin: 0;
+      font-size: clamp(19px, 2.1vw, 26px);
+      line-height: 1.25;
+      letter-spacing: .01em;
+    }
+
+    .brand-sub {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .internal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+      min-height: 40px;
+      padding: 8px 13px;
+      border: 1px solid #e8c374;
+      border-radius: 999px;
+      background: var(--warning-soft);
+      color: var(--warning);
+      font-size: 14px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(26px, 4vw, 46px);
+      border: 1px solid rgba(20, 125, 121, .17);
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.98), rgba(237,248,247,.96));
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -95px;
+      bottom: -120px;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(20, 125, 121, .16), transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(310px, .65fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 9px;
+      color: var(--brand);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(31px, 4.4vw, 52px);
+      line-height: 1.18;
+      letter-spacing: -.025em;
+    }
+
+    .hero-copy {
+      max-width: 790px;
+      margin: 17px 0 0;
+      color: #4d6461;
+      font-size: 17px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .hero-summary {
+      display: grid;
+      gap: 13px;
+      padding: 22px;
+      border: 1px solid rgba(20, 125, 121, .16);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(10px);
+    }
+
+    .summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 13px;
+      padding-bottom: 11px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .summary-row:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .summary-value {
+      min-width: 0;
+      text-align: right;
+      font-size: 15px;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 50px;
+      padding: 11px 18px;
+      border: 1px solid transparent;
+      border-radius: 13px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 850;
+      transition:
+        transform .14s ease,
+        box-shadow .14s ease,
+        background .14s ease,
+        border-color .14s ease,
+        opacity .14s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:focus-visible,
+    .input:focus-visible {
+      outline: 3px solid rgba(20, 125, 121, .28);
+      outline-offset: 2px;
+    }
+
+    .btn:disabled {
+      cursor: wait;
+      opacity: .65;
+      transform: none;
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      color: #fff;
+      box-shadow: 0 9px 22px rgba(20, 125, 121, .21);
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-dark);
+    }
+
+    .btn-secondary {
+      border-color: var(--line);
+      background: #fff;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--line-strong);
+      background: #fbfdfd;
+    }
+
+    .btn-blue {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 9px 22px rgba(44, 131, 165, .18);
+    }
+
+    .btn-warning {
+      border-color: #e8c374;
+      background: var(--warning-soft);
+      color: var(--warning);
+    }
+
+    .btn-danger {
+      border-color: #e6b2ae;
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .btn-small {
+      min-height: 42px;
+      padding: 8px 13px;
+      font-size: 14px;
+    }
+
+    .section {
+      margin-top: 24px;
+      padding: clamp(22px, 3vw, 32px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 21px;
+    }
+
+    .section-title-wrap {
+      min-width: 0;
+    }
+
+    .section-kicker {
+      margin: 0 0 4px;
+      color: var(--brand);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .06em;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: clamp(23px, 2.7vw, 31px);
+      line-height: 1.3;
+    }
+
+    .section-description {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 35px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .status-neutral {
+      background: var(--gray-soft);
+      color: #536461;
+    }
+
+    .status-running {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .status-ok {
+      background: var(--success-soft);
+      color: var(--success);
+    }
+
+    .status-warning {
+      background: var(--warning-soft);
+      color: var(--warning);
+    }
+
+    .status-error {
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .auth-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto auto;
+      gap: 11px;
+      align-items: end;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field label {
+      font-size: 15px;
+      font-weight: 850;
+    }
+
+    .field-help {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .input {
+      width: 100%;
+      min-height: 50px;
+      padding: 11px 13px;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .notice {
+      margin-top: 15px;
+      padding: 14px 16px;
+      border-radius: 13px;
+      font-size: 15px;
+    }
+
+    .notice-info {
+      border: 1px solid #b7dae8;
+      background: var(--surface-blue);
+      color: #315d6e;
+    }
+
+    .notice-warning {
+      border: 1px solid #e8c374;
+      background: var(--warning-soft);
+      color: #744608;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .demo-panel {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface-soft);
+    }
+
+    .demo-panel h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .demo-panel p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .demo-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 17px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .metric {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .metric-value {
+      margin-top: 4px;
+      font-size: 25px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .check-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      min-height: 138px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #fff;
+    }
+
+    .check-card h3 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .check-description {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .check-result {
+      margin: 12px 0 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: var(--gray-soft);
+      color: #4f6260;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .check-card[data-state="ok"] {
+      border-color: #acd6bc;
+      background: linear-gradient(145deg, #fff, #f5fcf8);
+    }
+
+    .check-card[data-state="warning"] {
+      border-color: #e6ca91;
+      background: linear-gradient(145deg, #fff, #fffaf0);
+    }
+
+    .check-card[data-state="error"] {
+      border-color: #e4b3af;
+      background: linear-gradient(145deg, #fff, #fff7f6);
+    }
+
+    .details-box {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .details-box summary {
+      cursor: pointer;
+      padding: 15px 17px;
+      background: var(--surface-soft);
+      font-weight: 850;
+      font-size: 15px;
+    }
+
+    .details-content {
+      padding: 17px;
+      background: #fff;
+    }
+
+    .table-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .table-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 9px;
+      padding: 10px 11px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .table-item strong {
+      font-size: 14px;
+    }
+
+    .url-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .url-list {
+      display: grid;
+      gap: 11px;
+    }
+
+    .url-item {
+      display: grid;
+      grid-template-columns: minmax(190px, .62fr) minmax(0, 1.38fr) auto;
+      gap: 13px;
+      align-items: center;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .url-name {
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    .url-note {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .url-value {
+      min-width: 0;
+      color: #365957;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .url-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .page-status {
+      margin-top: 5px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .manual-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .manual-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .manual-item input {
+      width: 22px;
+      height: 22px;
+      margin: 2px 0 0;
+      accent-color: var(--brand);
+    }
+
+    .manual-item label {
+      font-size: 16px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .manual-item small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.55;
+    }
+
+    .overall {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: center;
+      margin-top: 22px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(135deg, var(--surface-soft), var(--surface-blue));
+    }
+
+    .overall h3 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .overall p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .overall-score {
+      min-width: 155px;
+      text-align: right;
+    }
+
+    .overall-score strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+
+    .overall-score span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .step-result {
+      margin-top: 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #fff;
+    }
+
+    .step-result h3 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .step-result p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .raw-output {
+      max-height: 460px;
+      overflow: auto;
+      margin: 0;
+      padding: 15px;
+      border-radius: 12px;
+      background: #102c2a;
+      color: #e8f7f5;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 24px;
+      padding: 16px 4px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toast-area {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 100;
+      display: grid;
+      gap: 9px;
+      width: min(390px, calc(100% - 36px));
+      pointer-events: none;
+    }
+
+    .toast {
+      padding: 14px 16px;
+      border-radius: 13px;
+      background: #173f3d;
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+      font-size: 15px;
+      font-weight: 750;
+      animation: toast-in .18s ease-out;
+    }
+
+    .toast.error {
+      background: #8f2b27;
+    }
+
+    @keyframes toast-in {
+      from {
+        transform: translateY(10px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 940px) {
+      .hero-grid,
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .check-grid,
+      .manual-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .table-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .url-item {
+        grid-template-columns: 1fr;
+      }
+
+      .url-actions {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        font-size: 16px;
+      }
+
+      .page-shell {
+        width: min(100% - 22px, 1380px);
+        padding-top: 15px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .internal-badge {
+        display: none;
+      }
+
+      .brand-mark {
+        width: 47px;
+        height: 47px;
+        border-radius: 15px;
+      }
+
+      .brand-sub {
+        font-size: 13px;
+      }
+
+      .hero {
+        padding: 23px 19px;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+      }
+
+      .hero-copy {
+        font-size: 16px;
+      }
+
+      .hero-actions,
+      .demo-actions,
+      .url-toolbar {
+        display: grid;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .section {
+        padding: 21px 16px;
+      }
+
+      .section-heading {
+        display: grid;
+      }
+
+      .auth-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .check-card {
+        grid-template-columns: 1fr;
+      }
+
+      .check-card .status-pill {
+        justify-self: start;
+      }
+
+      .table-list {
+        grid-template-columns: 1fr;
+      }
+
+      .overall {
+        grid-template-columns: 1fr;
+      }
+
+      .overall-score {
+        text-align: left;
+      }
+
+      .footer {
+        display: grid;
+      }
+    }
+  </style>
+
+  <script src="./config.js?v=HOUKAGO-4-CONFIG-COMPLETE-20260717"></script>
+</head>
+
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">放</div>
+        <div>
+          <h2 class="brand-name">DPRO 放課後等デイサービス LINE</h2>
+          <p class="brand-sub">全画面連携・営業前システムチェック</p>
+        </div>
+      </div>
+
+      <span class="internal-badge">内部確認用・保護者へ共有しない</span>
+    </header>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">STEP HOUKAGO-5 / SYSTEM CHECK</p>
+          <h1>営業前の確認を<br>この画面に集約</h1>
+          <p class="hero-copy">
+            Worker、Supabase 29テーブル、電話番号正規化、5領域、
+            private写真バケット、支援プログラム公開、営業デモデータをまとめて確認します。
+            今後作成する保護者・管理・iPad画面の最終確認にも、そのまま使用します。
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="runAllButton" type="button">
+              自動チェックを実行
+            </button>
+            <button class="btn btn-blue" id="demoPrepareTopButton" type="button">
+              営業デモを準備
+            </button>
+            <button class="btn btn-secondary" id="copySalesUrlsTopButton" type="button">
+              営業用URLをコピー
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-summary">
+          <div class="summary-row">
+            <span class="summary-label">画面バージョン</span>
+            <strong class="summary-value" id="screenVersion">確認中</strong>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">config.js</span>
+            <strong class="summary-value" id="configVersion">確認中</strong>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Worker</span>
+            <strong class="summary-value" id="workerVersion">確認中</strong>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">施設コード</span>
+            <strong class="summary-value" id="facilityCode">確認中</strong>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">検査対象日</span>
+            <strong class="summary-value" id="checkDateLabel">確認中</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="authSection">
+      <div class="section-heading">
+        <div class="section-title-wrap">
+          <p class="section-kicker">01 / ADMIN AUTH</p>
+          <h2>管理コード</h2>
+          <p class="section-description">
+            デモ環境では管理コード1234を使用します。削除ボタンで保存値をすぐ消せます。
+          </p>
+        </div>
+        <span class="status-pill status-neutral" id="adminCodeStatus">
+          <span class="status-dot"></span>
+          未保存
+        </span>
+      </div>
+
+      <div class="auth-grid">
+        <div class="field">
+          <label for="adminCodeInput">管理コード</label>
+          <input
+            class="input"
+            id="adminCodeInput"
+            type="password"
+            inputmode="numeric"
+            autocomplete="off"
+            maxlength="100"
+            placeholder="管理コードを入力"
+          >
+          <p class="field-help">このブラウザ内だけに保存され、GitHubやWorkerには送信保存されません。</p>
+        </div>
+
+        <button class="btn btn-primary" id="saveAdminCodeButton" type="button">
+          保存
+        </button>
+        <button class="btn btn-danger" id="clearAdminCodeButton" type="button">
+          削除
+        </button>
+      </div>
+
+      <div class="notice notice-info">
+        URLに <strong>?demo=1</strong> が付いている場合だけ、デモ管理コードとデモ保護者情報を自動設定します。
+      </div>
+    </section>
+
+    <section class="section" id="demoSection">
+      <div class="section-heading">
+        <div class="section-title-wrap">
+          <p class="section-kicker">02 / DEMO PREPARE</p>
+          <h2>営業デモデータ準備</h2>
+          <p class="section-description">
+            児童2名、日常確認、学校お迎え便、活動報告、保護者連絡、対応タスクを準備します。
+          </p>
+        </div>
+        <span class="status-pill status-neutral" id="demoPrepareStatus">
+          <span class="status-dot"></span>
+          未実行
+        </span>
+      </div>
+
+      <div class="demo-grid">
+        <div class="demo-panel">
+          <h3>営業前に1回実行</h3>
+          <p>
+            本番施設ではproduction guardにより実行できません。
+            デモ施設だけに営業確認用データを作成します。
+          </p>
+
+          <div class="demo-actions">
+            <button class="btn btn-blue" id="demoPrepareButton" type="button">
+              営業デモを準備
+            </button>
+            <button class="btn btn-secondary" id="openOwnerDemoButton" type="button">
+              管理画面予定URL
+            </button>
+          </div>
+
+          <div class="notice notice-warning" id="demoVerification">
+            まだ実行していません。管理コード保存後に準備してください。
+          </div>
+        </div>
+
+        <div class="demo-panel">
+          <h3>デモデータ確認</h3>
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-label">利用予定</div>
+              <div class="metric-value" id="scheduleCount">0</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">日常確認</div>
+              <div class="metric-value" id="dailyCheckCount">0</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">活動報告</div>
+              <div class="metric-value" id="activityCount">0</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">送迎便</div>
+              <div class="metric-value" id="transportCount">0</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">保護者連絡</div>
+              <div class="metric-value" id="guardianRequestCount">0</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">未対応タスク</div>
+              <div class="metric-value" id="taskCount">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="automaticSection">
+      <div class="section-heading">
+        <div class="section-title-wrap">
+          <p class="section-kicker">03 / AUTOMATIC CHECK</p>
+          <h2>自動チェック</h2>
+          <p class="section-description">
+            読み取り確認だけを一括実行します。デモ準備は別ボタンのため、誤ってデータを変更しません。
+          </p>
+        </div>
+        <span class="status-pill status-neutral" id="automaticOverallStatus">
+          <span class="status-dot"></span>
+          0 / 14
+        </span>
+      </div>
+
+      <div class="check-grid">
+        <article class="check-card" id="card-config" data-state="neutral">
+          <div>
+            <h3>1. 共通設定</h3>
+            <p class="check-description">config.jsの読込、バージョン、Worker URLを確認します。</p>
+            <pre class="check-result" id="result-config">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-config"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-health" data-state="neutral">
+          <div>
+            <h3>2. Worker・Supabase接続</h3>
+            <p class="check-description">health APIと施設コードを確認します。</p>
+            <pre class="check-result" id="result-health">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-health"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-publicConfig" data-state="neutral">
+          <div>
+            <h3>3. 公開設定</h3>
+            <p class="check-description">施設情報、営業日、申請種別、5領域定義を確認します。</p>
+            <pre class="check-result" id="result-publicConfig">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-publicConfig"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-admin" data-state="neutral">
+          <div>
+            <h3>4. 管理コード認証</h3>
+            <p class="check-description">保存した管理コードで管理APIへ接続します。</p>
+            <pre class="check-result" id="result-admin">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-admin"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-tables" data-state="neutral">
+          <div>
+            <h3>5. Supabase 29テーブル</h3>
+            <p class="check-description">全テーブルが存在し、Workerから読み取れるか確認します。</p>
+            <pre class="check-result" id="result-tables">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-tables"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-phone" data-state="neutral">
+          <div>
+            <h3>6. 電話番号正規化</h3>
+            <p class="check-description">ハイフン、空白、全角、+81形式を同一判定します。</p>
+            <pre class="check-result" id="result-phone">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-phone"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-domains" data-state="neutral">
+          <div>
+            <h3>7. 5領域</h3>
+            <p class="check-description">5領域タグのDB検証関数と画面定義を確認します。</p>
+            <pre class="check-result" id="result-domains">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-domains"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-bucket" data-state="neutral">
+          <div>
+            <h3>8. private写真バケット</h3>
+            <p class="check-description">児童写真バケットが非公開になっているか確認します。</p>
+            <pre class="check-result" id="result-bucket">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-bucket"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-supportProgram" data-state="neutral">
+          <div>
+            <h3>9. 支援プログラム公開</h3>
+            <p class="check-description">公開データと5領域の各説明を確認します。</p>
+            <pre class="check-result" id="result-supportProgram">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-supportProgram"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-announcements" data-state="neutral">
+          <div>
+            <h3>10. 保護者向けお知らせ</h3>
+            <p class="check-description">公開中のお知らせを取得できるか確認します。</p>
+            <pre class="check-result" id="result-announcements">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-announcements"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-dashboard" data-state="neutral">
+          <div>
+            <h3>11. 管理ダッシュボード</h3>
+            <p class="check-description">利用児童、保護者連絡、タスク、期限件数を確認します。</p>
+            <pre class="check-result" id="result-dashboard">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-dashboard"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-day" data-state="neutral">
+          <div>
+            <h3>12. 日別児童・日常確認</h3>
+            <p class="check-description">検査対象日の児童、送迎、日常確認を確認します。</p>
+            <pre class="check-result" id="result-day">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-day"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-transport" data-state="neutral">
+          <div>
+            <h3>13. 送迎便</h3>
+            <p class="check-description">車両、運転者、添乗者、児童割当を確認します。</p>
+            <pre class="check-result" id="result-transport">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-transport"><span class="status-dot"></span>未確認</span>
+        </article>
+
+        <article class="check-card" id="card-activityPlan" data-state="neutral">
+          <div>
+            <h3>14. 活動・支援計画期限</h3>
+            <p class="check-description">活動プログラムと90日以内の計画期限を確認します。</p>
+            <pre class="check-result" id="result-activityPlan">未確認</pre>
+          </div>
+          <span class="status-pill status-neutral" id="status-activityPlan"><span class="status-dot"></span>未確認</span>
+        </article>
+      </div>
+
+      <details class="details-box">
+        <summary>Supabase 29テーブルの詳細</summary>
+        <div class="details-content">
+          <div class="table-list" id="tableList">
+            <div class="table-item"><span>自動チェック後に表示します</span></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="details-box">
+        <summary>APIの生データ（内部確認用）</summary>
+        <div class="details-content">
+          <pre class="raw-output" id="rawOutput">まだ自動チェックを実行していません。</pre>
+        </div>
+      </details>
+
+      <div class="step-result" id="stepResult">
+        <h3 id="stepResultTitle">STEP HOUKAGO-5は未確認です</h3>
+        <p id="stepResultMessage">
+          管理コードを保存し、必要に応じてデモ準備後、自動チェックを実行してください。
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="urlSection">
+      <div class="section-heading">
+        <div class="section-title-wrap">
+          <p class="section-kicker">04 / URL CHECK</p>
+          <h2>各画面URL</h2>
+          <p class="section-description">
+            現STEPではconfig.jsとsystem-check.htmlを確認します。他画面は今後のSTEPで追加されます。
+          </p>
+        </div>
+        <span class="status-pill status-neutral" id="pageStatus">
+          <span class="status-dot"></span>
+          未確認
+        </span>
+      </div>
+
+      <div class="url-toolbar">
+        <button class="btn btn-primary btn-small" id="checkPageUrlsButton" type="button">
+          公開URLを確認
+        </button>
+        <button class="btn btn-secondary btn-small" id="copySalesUrlsButton" type="button">
+          営業用URLをまとめてコピー
+        </button>
+        <button class="btn btn-secondary btn-small" id="copyAllUrlsButton" type="button">
+          内部URLもまとめてコピー
+        </button>
+      </div>
+
+      <div class="url-list" id="urlList"></div>
+    </section>
+
+    <section class="section" id="manualSection">
+      <div class="section-heading">
+        <div class="section-title-wrap">
+          <p class="section-kicker">05 / FINAL MANUAL CHECK</p>
+          <h2>完成時の実機確認</h2>
+          <p class="section-description">
+            今後の画面完成後、岩口様にしかできないスマホ・iPad操作だけを確認します。
+          </p>
+        </div>
+        <span class="status-pill status-neutral" id="manualStatus">
+          <span class="status-dot"></span>
+          0 / 8
+        </span>
+      </div>
+
+      <div class="manual-grid">
+        <div class="manual-item">
+          <input id="manual-1" type="checkbox" data-manual-check>
+          <label for="manual-1">
+            保護者LINE画面をスマートフォンで開ける
+            <small>欠席・遅刻・早退・利用日変更・送迎変更の入口が分かりやすい</small>
+          </label>
+        </div>
+
+        <div class="manual-item">
+          <input id="manual-2" type="checkbox" data-manual-check>
+          <label for="manual-2">
+            初回登録後、2回目は保護者情報が自動表示される
+            <small>LINEユーザーIDで既存保護者と児童を取得できる</small>
+          </label>
+        </div>
+
+        <div class="manual-item">
+          <input id="manual-3" type="checkbox" data-manual-check>
+          <label for="manual-3">
+            電話番号の表記違いで同じ保護者を検索できる
+            <small>ハイフン、空白、全角、+81形式を同一番号として扱う</small>
+          </label>
+        </div>
+
+        <div class="manual-item">
+          <input id="manual-4" type="checkbox" data-manual-check>
+          <label for="manual-4">
+            PC管理画面に児童2名と未確認連絡が表示される
+            <small>空画面ではなく、営業説明に使えるデモ内容が見える</small>
+          </label>
+        </div>
+
+        <div class="manual-item">
+          <input id="manual-5" type="checkbox" data-manual-check>
+          <label for="manual-5">
+            iPadで乗車・到着・活動・帰宅準備を更新できる
+            <small>保存後に画面を再読込してもSupabaseの状態が残る</small>
+          </label>
+        </div>
+
+        <div class="manual-item">
+          <input id="manual-6" type="checkbox" data-manual-check>
+          <label for="manual-6">
+            未乗車児童がいる状態では送迎便を出発できない
+            <small>車両定員、車両・運転者・添乗者の重複も防止される</small>
+          </label>
+        </div>
+
+        <div class="manual-item">
+          <input id="manual-7" type="checkbox" data-manual-check>
+          <label for="manual-7">
+            5領域付き活動報告を保護者マイページで確認できる
+            <small>内部メモや非公開情報は保護者画面へ表示されない</small>
+          </label>
+        </div>
+
+        <div class="manual-item">
+          <input id="manual-8" type="checkbox" data-manual-check>
+          <label for="manual-8">
+            PC・スマホ・iPadで文字とボタンが読みやすい
+            <small>葬儀システム程度の文字サイズで、長い氏名や連絡も重ならない</small>
+          </label>
+        </div>
+      </div>
+
+      <div class="overall">
+        <div>
+          <h3 id="overallTitle">システム最終確認は未完了です</h3>
+          <p id="overallMessage">
+            STEP HOUKAGO-5の基盤検査後、各画面の完成時に手動8項目を確認します。
+          </p>
+        </div>
+        <div class="overall-score">
+          <strong id="overallScore">0 / 22</strong>
+          <span>自動14項目＋手動8項目</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>DPRO 放課後等デイサービス LINE｜STEP HOUKAGO-5</div>
+      <div id="footerVersion">system-check.html</div>
+    </footer>
+  </main>
+
+  <div class="toast-area" id="toastArea" aria-live="polite"></div>
+
+  <script>
+    (function startHoukagoSystemCheck() {
+      "use strict";
+
+      const SCREEN_VERSION =
+        "HOUKAGO-5-SYSTEM-CHECK-DEMO-PREPARE-20260717";
+      const CONFIG =
+        window.DPRO_HOUKAGO_CONFIG ||
+        window.DPRO_HOUKAGO ||
+        null;
+
+      const CHECK_KEYS = [
+        "config",
+        "health",
+        "publicConfig",
+        "admin",
+        "tables",
+        "phone",
+        "domains",
+        "bucket",
+        "supportProgram",
+        "announcements",
+        "dashboard",
+        "day",
+        "transport",
+        "activityPlan",
+      ];
+
+      const PAGE_DEFINITIONS = [
+        {
+          key: "index",
+          title: "保護者向け連絡画面",
+          note: "STEP HOUKAGO-6で作成",
+          urlKey: "index",
+          currentRequired: false,
+          sales: true,
+        },
+        {
+          key: "member",
+          title: "児童・保護者マイページ",
+          note: "STEP HOUKAGO-7で作成",
+          urlKey: "member",
+          currentRequired: false,
+          sales: true,
+        },
+        {
+          key: "owner",
+          title: "施設管理者PC画面",
+          note: "STEP HOUKAGO-8で作成",
+          urlKey: "owner",
+          currentRequired: false,
+          sales: true,
+        },
+        {
+          key: "ownerIpad",
+          title: "スタッフ・送迎iPad画面",
+          note: "STEP HOUKAGO-9で作成",
+          urlKey: "ownerIpad",
+          currentRequired: false,
+          sales: true,
+        },
+        {
+          key: "supportProgram",
+          title: "支援プログラム公開画面",
+          note: "STEP HOUKAGO-10で作成",
+          urlKey: "supportProgram",
+          currentRequired: false,
+          sales: true,
+        },
+        {
+          key: "systemCheck",
+          title: "営業前システムチェック",
+          note: "STEP HOUKAGO-5",
+          urlKey: "systemCheck",
+          currentRequired: true,
+          sales: false,
+        },
+        {
+          key: "config",
+          title: "共通設定 config.js",
+          note: "STEP HOUKAGO-4",
+          urlKey: "config",
+          currentRequired: true,
+          sales: false,
+        },
+      ];
+
+      const state = {
+        checks: Object.fromEntries(
+          CHECK_KEYS.map((key) => [key, null])
+        ),
+        checkDate: null,
+        healthData: null,
+        integrationData: null,
+        demoData: null,
+        rawData: {},
+        pageStates: {},
+      };
+
+      const $ = (selector) => document.querySelector(selector);
+      const $$ = (selector) =>
+        Array.from(document.querySelectorAll(selector));
+
+      const els = {
+        runAllButton: $("#runAllButton"),
+        demoPrepareTopButton: $("#demoPrepareTopButton"),
+        demoPrepareButton: $("#demoPrepareButton"),
+        copySalesUrlsTopButton: $("#copySalesUrlsTopButton"),
+        openOwnerDemoButton: $("#openOwnerDemoButton"),
+
+        adminCodeInput: $("#adminCodeInput"),
+        saveAdminCodeButton: $("#saveAdminCodeButton"),
+        clearAdminCodeButton: $("#clearAdminCodeButton"),
+        adminCodeStatus: $("#adminCodeStatus"),
+
+        demoPrepareStatus: $("#demoPrepareStatus"),
+        demoVerification: $("#demoVerification"),
+
+        scheduleCount: $("#scheduleCount"),
+        dailyCheckCount: $("#dailyCheckCount"),
+        activityCount: $("#activityCount"),
+        transportCount: $("#transportCount"),
+        guardianRequestCount: $("#guardianRequestCount"),
+        taskCount: $("#taskCount"),
+
+        automaticOverallStatus: $("#automaticOverallStatus"),
+        pageStatus: $("#pageStatus"),
+        manualStatus: $("#manualStatus"),
+        overallTitle: $("#overallTitle"),
+        overallMessage: $("#overallMessage"),
+        overallScore: $("#overallScore"),
+
+        stepResult: $("#stepResult"),
+        stepResultTitle: $("#stepResultTitle"),
+        stepResultMessage: $("#stepResultMessage"),
+
+        screenVersion: $("#screenVersion"),
+        configVersion: $("#configVersion"),
+        workerVersion: $("#workerVersion"),
+        facilityCode: $("#facilityCode"),
+        checkDateLabel: $("#checkDateLabel"),
+        footerVersion: $("#footerVersion"),
+
+        tableList: $("#tableList"),
+        rawOutput: $("#rawOutput"),
+        urlList: $("#urlList"),
+        checkPageUrlsButton: $("#checkPageUrlsButton"),
+        copySalesUrlsButton: $("#copySalesUrlsButton"),
+        copyAllUrlsButton: $("#copyAllUrlsButton"),
+        toastArea: $("#toastArea"),
+      };
+
+      function configRequired() {
+        if (!CONFIG) {
+          throw new Error(
+            "config.jsを読み込めませんでした。ファイル名と配置場所を確認してください。"
+          );
+        }
+        return CONFIG;
+      }
+
+      function escapeHtml(value) {
+        if (CONFIG?.utils?.escapeHtml) {
+          return CONFIG.utils.escapeHtml(value);
+        }
+
+        return String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function showToast(message, type = "success") {
+        if (!els.toastArea) return;
+
+        const toast = document.createElement("div");
+        toast.className = `toast${type === "error" ? " error" : ""}`;
+        toast.textContent = message;
+        els.toastArea.appendChild(toast);
+
+        window.setTimeout(() => {
+          toast.remove();
+        }, 3800);
+      }
+
+      function errorMessage(error) {
+        return (
+          error?.message ||
+          error?.error?.message ||
+          "処理に失敗しました。"
+        );
+      }
+
+      async function withButton(button, loadingText, task) {
+        const original = button?.textContent || "";
+
+        if (button) {
+          button.disabled = true;
+          button.textContent = loadingText;
+        }
+
+        try {
+          return await task();
+        } finally {
+          if (button) {
+            button.disabled = false;
+            button.textContent = original;
+          }
+        }
+      }
+
+      function setPill(element, mode, text) {
+        if (!element) return;
+        element.className = `status-pill status-${mode}`;
+        element.innerHTML =
+          `<span class="status-dot"></span>${escapeHtml(text)}`;
+      }
+
+      function setCheckResult(key, mode, message) {
+        const card = document.getElementById(`card-${key}`);
+        const statusElement =
+          document.getElementById(`status-${key}`);
+        const resultElement =
+          document.getElementById(`result-${key}`);
+
+        const labels = {
+          neutral: "未確認",
+          running: "確認中",
+          ok: "OK",
+          warning: "要確認",
+          error: "エラー",
+        };
+
+        setPill(statusElement, mode, labels[mode] || mode);
+
+        if (card) {
+          card.dataset.state = mode;
+        }
+
+        if (resultElement) {
+          resultElement.textContent = message;
+        }
+
+        if (mode === "ok") {
+          state.checks[key] = true;
+        } else if (mode === "warning" || mode === "error") {
+          state.checks[key] = false;
+        } else if (mode === "neutral") {
+          state.checks[key] = null;
+        }
+
+        updateScores();
+      }
+
+      function getAdminCode() {
+        if (!CONFIG) return "";
+        return CONFIG.storage.get(
+          CONFIG.STORAGE_KEYS.adminCode,
+          ""
+        );
+      }
+
+      function saveAdminCode(value) {
+        configRequired();
+        const code = String(value || "").trim();
+
+        if (!code) {
+          throw new Error("管理コードを入力してください。");
+        }
+
+        CONFIG.storage.set(CONFIG.STORAGE_KEYS.adminCode, code);
+        updateAdminCodeStatus();
+      }
+
+      function clearAdminCode() {
+        if (!CONFIG) return;
+        CONFIG.storage.remove(CONFIG.STORAGE_KEYS.adminCode);
+        els.adminCodeInput.value = "";
+        updateAdminCodeStatus();
+      }
+
+      function requireAdminCode() {
+        const code = getAdminCode();
+        if (!code) {
+          throw new Error("先に管理コードを保存してください。");
+        }
+        return code;
+      }
+
+      function updateAdminCodeStatus() {
+        const code = getAdminCode();
+
+        if (code) {
+          els.adminCodeInput.value = code;
+          setPill(els.adminCodeStatus, "ok", "保存済み");
+        } else {
+          els.adminCodeInput.value = "";
+          setPill(els.adminCodeStatus, "neutral", "未保存");
+        }
+      }
+
+      function selectedCheckDate() {
+        configRequired();
+
+        const queryDate =
+          CONFIG.utils.getQueryParams().get("date");
+        const savedDate =
+          CONFIG.storage.get(
+            CONFIG.STORAGE_KEYS.selectedDate,
+            ""
+          );
+
+        return (
+          state.checkDate ||
+          queryDate ||
+          savedDate ||
+          CONFIG.utils.todayJst()
+        );
+      }
+
+      function setCheckDate(value) {
+        configRequired();
+        state.checkDate = value || CONFIG.utils.todayJst();
+        CONFIG.storage.set(
+          CONFIG.STORAGE_KEYS.selectedDate,
+          state.checkDate
+        );
+        els.checkDateLabel.textContent =
+          CONFIG.utils.formatDate(
+            state.checkDate,
+            { weekday: "short" }
+          );
+      }
+
+      function initializeSummary() {
+        els.screenVersion.textContent = SCREEN_VERSION;
+        els.footerVersion.textContent = SCREEN_VERSION;
+
+        if (!CONFIG) {
+          els.configVersion.textContent = "読込失敗";
+          els.workerVersion.textContent = "未確認";
+          els.facilityCode.textContent = "未確認";
+          els.checkDateLabel.textContent =
+            new Date().toLocaleDateString("ja-JP");
+
+          setCheckResult(
+            "config",
+            "error",
+            "config.jsが読み込まれていません。GitHub上のファイル名と配置を確認してください。"
+          );
+          return;
+        }
+
+        els.configVersion.textContent =
+          CONFIG.APP.appVersion;
+        els.workerVersion.textContent =
+          CONFIG.APP.workerVersion;
+        els.facilityCode.textContent =
+          CONFIG.APP.facilityCode;
+
+        setCheckDate(selectedCheckDate());
+
+        const configOk =
+          CONFIG.APP.appVersion ===
+            "HOUKAGO-4-CONFIG-COMPLETE-20260717" &&
+          CONFIG.APP.workerVersion ===
+            "HOUKAGO-3-WORKER-API-COMPLETE-20260717" &&
+          CONFIG.URLS.workerBase.includes(
+            "dpro-houkago-dayservice-line-api"
+          );
+
+        setCheckResult(
+          "config",
+          configOk ? "ok" : "warning",
+          [
+            `app: ${CONFIG.APP.appVersion}`,
+            `worker: ${CONFIG.APP.workerVersion}`,
+            `API: ${CONFIG.URLS.workerBase}`,
+          ].join("\n")
+        );
+      }
+
+      async function runHealthCheck() {
+        setCheckResult("health", "running", "Workerへ接続中");
+
+        try {
+          const data = await CONFIG.API.health();
+          state.healthData = data;
+          state.rawData.health = data;
+
+          const ok =
+            data?.ok === true &&
+            data?.database?.ok === true &&
+            data?.database?.facility_code ===
+              CONFIG.APP.facilityCode;
+
+          setCheckResult(
+            "health",
+            ok ? "ok" : "warning",
+            [
+              `service: ${data?.service || "未取得"}`,
+              `version: ${data?.version || "未取得"}`,
+              `facility: ${data?.database?.facility_code || "未取得"}`,
+              `DB: ${data?.database?.ok === true ? "OK" : "要確認"}`,
+            ].join("\n")
+          );
+        } catch (error) {
+          setCheckResult(
+            "health",
+            "error",
+            errorMessage(error)
+          );
+        }
+      }
+
+      async function runPublicConfigCheck() {
+        setCheckResult(
+          "publicConfig",
+          "running",
+          "公開設定を取得中"
+        );
+
+        try {
+          const data = await CONFIG.API.publicConfig();
+          state.rawData.publicConfig = data;
+
+          const businessDayCount =
+            data?.business_days?.length || 0;
+          const requestTypeCount =
+            data?.request_types?.length || 0;
+          const domainCount =
+            data?.support_domains?.length || 0;
+
+          const ok =
+            data?.ok === true &&
+            businessDayCount === 7 &&
+            requestTypeCount >= 10 &&
+            domainCount === 5;
+
+          setCheckResult(
+            "publicConfig",
+            ok ? "ok" : "warning",
+            [
+              `営業日設定: ${businessDayCount}件`,
+              `保護者連絡種別: ${requestTypeCount}件`,
+              `5領域: ${domainCount}件`,
+            ].join("\n")
+          );
+        } catch (error) {
+          setCheckResult(
+            "publicConfig",
+            "error",
+            errorMessage(error)
+          );
+        }
+      }
+
+      async function runAdminCheck() {
+        setCheckResult(
+          "admin",
+          "running",
+          "管理コードを確認中"
+        );
+
+        try {
+          requireAdminCode();
+          const data = await CONFIG.API.adminAuth();
+          state.rawData.adminAuth = data;
+
+          const ok =
+            data?.ok === true &&
+            data?.authenticated === true &&
+            data?.facility?.facility_code ===
+              CONFIG.APP.facilityCode;
+
+          setCheckResult(
+            "admin",
+            ok ? "ok" : "warning",
+            [
+              `認証: ${data?.authenticated === true ? "OK" : "要確認"}`,
+              `施設: ${data?.facility?.facility_name || "未取得"}`,
+            ].join("\n")
+          );
+        } catch (error) {
+          setCheckResult(
+            "admin",
+            "error",
+            errorMessage(error)
+          );
+        }
+      }
+
+      async function runIntegrationCheck() {
+        ["tables", "phone", "domains", "bucket"].forEach(
+          (key) =>
+            setCheckResult(key, "running", "統合検査を実行中")
+        );
+
+        try {
+          requireAdminCode();
+          const data =
+            await CONFIG.API.adminIntegrationCheck();
+
+          state.integrationData = data;
+          state.rawData.integrationCheck = data;
+
+          const tables = data?.checks?.tables || {};
+          const tableEntries = Object.entries(tables);
+          const tableOkCount = tableEntries.filter(
+            ([, value]) => value?.ok === true
+          ).length;
+
+          const tablesOk =
+            tableEntries.length === 29 &&
+            tableOkCount === 29;
+
+          setCheckResult(
+            "tables",
+            tablesOk ? "ok" : "error",
+            [
+              `検査テーブル: ${tableEntries.length}件`,
+              `正常: ${tableOkCount}件`,
+              `異常: ${tableEntries.length - tableOkCount}件`,
+            ].join("\n")
+          );
+
+          const phone =
+            data?.checks?.phone_normalization;
+          setCheckResult(
+            "phone",
+            phone?.ok === true ? "ok" : "error",
+            phone?.ok === true
+              ? `+81・全角を09011112202へ正規化\nresult: ${phone?.result}`
+              : errorMessage(phone)
+          );
+
+          const domains =
+            data?.checks?.support_domains;
+          const configDomainCount =
+            Object.keys(CONFIG.SUPPORT_DOMAINS || {}).length;
+
+          setCheckResult(
+            "domains",
+            domains?.ok === true &&
+              configDomainCount === 5
+              ? "ok"
+              : "error",
+            [
+              `DB関数: ${domains?.ok === true ? "OK" : "要確認"}`,
+              `config.js定義: ${configDomainCount}領域`,
+            ].join("\n")
+          );
+
+          const bucket =
+            data?.checks?.private_photo_bucket;
+          const bucketData = bucket?.bucket || {};
+
+          setCheckResult(
+            "bucket",
+            bucket?.ok === true &&
+              bucketData?.public === false
+              ? "ok"
+              : "error",
+            [
+              `bucket: ${bucketData?.id || CONFIG.APP.privatePhotoBucket}`,
+              `public: ${String(bucketData?.public)}`,
+              `private判定: ${bucket?.ok === true ? "OK" : "要確認"}`,
+            ].join("\n")
+          );
+
+          renderTableList(tables);
+        } catch (error) {
+          ["tables", "phone", "domains", "bucket"].forEach(
+            (key) =>
+              setCheckResult(
+                key,
+                "error",
+                errorMessage(error)
+              )
+          );
+        }
+      }
+
+      async function runSupportProgramCheck() {
+        setCheckResult(
+          "supportProgram",
+          "running",
+          "公開データを取得中"
+        );
+
+        try {
+          const data =
+            await CONFIG.API.publicSupportProgram();
+          state.rawData.supportProgram = data;
+
+          const program = data?.support_program || {};
+          const domainTexts = [
+            program.health_life,
+            program.motor_sensory,
+            program.cognition_behavior,
+            program.language_communication,
+            program.relationships_social,
+          ];
+          const completedDomains =
+            domainTexts.filter(Boolean).length;
+
+          const ok =
+            data?.ok === true &&
+            completedDomains === 5 &&
+            Boolean(program.published_at);
+
+          setCheckResult(
+            "supportProgram",
+            ok ? "ok" : "warning",
+            [
+              `公開状況: ${program.published_at ? "公開済み" : "要確認"}`,
+              `5領域説明: ${completedDomains}/5`,
+              `version: ${program.version_number || "未取得"}`,
+            ].join("\n")
+          );
+        } catch (error) {
+          setCheckResult(
+            "supportProgram",
+            "error",
+            errorMessage(error)
+          );
+        }
+      }
+
+      async function runAnnouncementsCheck() {
+        setCheckResult(
+          "announcements",
+          "running",
+          "お知らせを取得中"
+        );
+
+        try {
+          const data =
+            await CONFIG.API.publicAnnouncements("guardian");
+          state.rawData.announcements = data;
+          const count = data?.announcements?.length || 0;
+
+          setCheckResult(
+            "announcements",
+            data?.ok === true && count > 0
+              ? "ok"
+              : "warning",
+            `公開中のお知らせ: ${count}件`
+          );
+        } catch (error) {
+          setCheckResult(
+            "announcements",
+            "error",
+            errorMessage(error)
+          );
+        }
+      }
+
+      async function runDashboardCheck() {
+        setCheckResult(
+          "dashboard",
+          "running",
+          "ダッシュボードを取得中"
+        );
+
+        try {
+          requireAdminCode();
+          const data =
+            await CONFIG.API.adminDashboard(
+              selectedCheckDate()
+            );
+          state.rawData.dashboard = data;
+
+          const counts = data?.counts || {};
+          const ok = data?.ok === true;
+
+          setCheckResult(
+            "dashboard",
+            ok ? "ok" : "warning",
+            [
+              `利用児童: ${counts.scheduled_children ?? 0}名`,
+              `保護者連絡: ${counts.guardian_requests ?? 0}件`,
+              `未対応タスク: ${counts.open_tasks ?? 0}件`,
+              `計画期限: ${counts.support_plans_due ?? 0}件`,
+              `送迎便: ${counts.transport_runs ?? 0}便`,
+            ].join("\n")
+          );
+        } catch (error) {
+          setCheckResult(
+            "dashboard",
+            "error",
+            errorMessage(error)
+          );
+        }
+      }
+
+      async function runDayCheck() {
+        setCheckResult(
+          "day",
+          "running",
+          "日別児童情報を取得中"
+        );
+
+        try {
+          requireAdminCode();
+          const data = await CONFIG.API.adminDay(
+            selectedCheckDate()
+          );
+          state.rawData.day = data;
+
+          const children = data?.children || [];
+          const dailyChecks = children.reduce(
+            (total, row) =>
+              total + (row?.daily_checks?.length || 0),
+            0
+          );
+          const transportAssignments = children.reduce(
+            (total, row) =>
+              total + (row?.transport?.length || 0),
+            0
+          );
+
+          setCheckResult(
+            "day",
+            data?.ok === true
+              ? "ok"
+              : "warning",
+            [
+              `児童: ${children.length}名`,
+              `日常確認: ${dailyChecks}件`,
+              `送迎割当: ${transportAssignments}件`,
+            ].join("\n")
+          );
+        } catch (error) {
+          setCheckResult(
+            "day",
+            "error",
+            errorMessage(error)
+          );
+        }
+      }
+
+      async function runTransportCheck() {
+        setCheckResult(
+          "transport",
+          "running",
+          "送迎便を取得中"
+        );
+
+        try {
+          requireAdminCode();
+          const data =
+            await CONFIG.API.adminTransportRuns(
+              selectedCheckDate()
+            );
+          state.rawData.transportRuns = data;
+
+          const runs = data?.transport_runs || [];
+          const assignments = runs.reduce(
+            (total, run) =>
+              total + (run?.assignments?.length || 0),
+            0
+          );
+          const completeAssignments = runs.every(
+            (run) =>
+              run.vehicle &&
+              run.driver &&
+              Array.isArray(run.assignments)
+          );
+
+          const mode =
+            data?.ok === true &&
+            (runs.length === 0 || completeAssignments)
+              ? "ok"
+              : "warning";
+
+          setCheckResult(
+            "transport",
+            mode,
+            [
+              `送迎便: ${runs.length}便`,
+              `児童割当: ${assignments}件`,
+              `車両・運転者: ${completeAssignments ? "確認済み" : "要確認"}`,
+            ].join("\n")
+          );
+        } catch (error) {
+          setCheckResult(
+            "transport",
+            "error",
+            errorMessage(error)
+          );
+        }
+      }
+
+      async function runActivityPlanCheck() {
+        setCheckResult(
+          "activityPlan",
+          "running",
+          "活動・期限情報を取得中"
+        );
+
+        try {
+          requireAdminCode();
+
+          const [programData, planData] =
+            await Promise.all([
+              CONFIG.API.adminActivityPrograms(),
+              CONFIG.API.adminSupportPlansDue({
+                from: CONFIG.utils.todayJst(),
+                to: addDaysJst(
+                  CONFIG.utils.todayJst(),
+                  90
+                ),
+              }),
+            ]);
+
+          state.rawData.activityPrograms = programData;
+          state.rawData.supportPlansDue = planData;
+
+          const programCount =
+            programData?.activity_programs?.length || 0;
+          const dueCount =
+            planData?.support_plans?.length || 0;
+
+          const allProgramsValid =
+            (programData?.activity_programs || []).every(
+              (program) =>
+                Array.isArray(program.support_domains) &&
+                program.support_domains.length > 0
+            );
+
+          const ok =
+            programData?.ok === true &&
+            planData?.ok === true &&
+            programCount > 0 &&
+            allProgramsValid;
+
+          setCheckResult(
+            "activityPlan",
+            ok ? "ok" : "warning",
+            [
+              `活動プログラム: ${programCount}件`,
+              `5領域設定: ${allProgramsValid ? "OK" : "要確認"}`,
+              `90日以内の計画期限: ${dueCount}件`,
+            ].join("\n")
+          );
+        } catch (error) {
+          setCheckResult(
+            "activityPlan",
+            "error",
+            errorMessage(error)
+          );
+        }
+      }
+
+      function addDaysJst(dateText, days) {
+        const date = new Date(
+          `${dateText}T00:00:00+09:00`
+        );
+        date.setUTCDate(date.getUTCDate() + Number(days));
+        return date.toISOString().slice(0, 10);
+      }
+
+      function renderTableList(tables) {
+        const entries = Object.entries(tables || {}).sort(
+          ([left], [right]) =>
+            left.localeCompare(right, "ja")
+        );
+
+        if (entries.length === 0) {
+          els.tableList.innerHTML =
+            '<div class="table-item"><span>テーブル情報を取得できませんでした。</span></div>';
+          return;
+        }
+
+        els.tableList.innerHTML = entries
+          .map(
+            ([name, value]) => `
+              <div class="table-item">
+                <span>${escapeHtml(name)}</span>
+                <strong style="color:${value?.ok ? "var(--success)" : "var(--danger)"}">
+                  ${value?.ok ? `OK / ${Number(value?.count || 0)}件` : "ERROR"}
+                </strong>
+              </div>
+            `
+          )
+          .join("");
+      }
+
+      function renderRawOutput() {
+        els.rawOutput.textContent = JSON.stringify(
+          state.rawData,
+          null,
+          2
+        );
+      }
+
+      async function runAllChecks() {
+        configRequired();
+        requireAdminCode();
+
+        state.rawData = {};
+
+        CHECK_KEYS.forEach((key) => {
+          if (key !== "config") {
+            setCheckResult(key, "neutral", "実行待ち");
+          }
+        });
+
+        await runHealthCheck();
+        await runPublicConfigCheck();
+        await runAdminCheck();
+        await runIntegrationCheck();
+        await runSupportProgramCheck();
+        await runAnnouncementsCheck();
+        await runDashboardCheck();
+        await runDayCheck();
+        await runTransportCheck();
+        await runActivityPlanCheck();
+
+        renderRawOutput();
+        updateScores();
+
+        const passed = CHECK_KEYS.filter(
+          (key) => state.checks[key] === true
+        ).length;
+
+        showToast(
+          passed === CHECK_KEYS.length
+            ? "自動チェックはすべて正常です。"
+            : `自動チェック完了：${passed}/${CHECK_KEYS.length}`
+        );
+      }
+
+      async function prepareDemo() {
+        configRequired();
+        requireAdminCode();
+
+        setPill(
+          els.demoPrepareStatus,
+          "running",
+          "準備中"
+        );
+        els.demoVerification.textContent =
+          "営業デモデータを準備しています。";
+
+        try {
+          const data =
+            await CONFIG.API.adminDemoPrepare();
+
+          state.demoData = data;
+          state.rawData.demoPrepare = data;
+
+          if (data?.demo_date) {
+            setCheckDate(data.demo_date);
+          }
+
+          const counts = data?.counts || {};
+          updateDemoCounts(counts);
+
+          setPill(
+            els.demoPrepareStatus,
+            data?.ok === true ? "ok" : "warning",
+            data?.ok === true ? "準備完了" : "要確認"
+          );
+
+          els.demoVerification.textContent =
+            data?.ok === true
+              ? `${data.demo_date}の営業デモデータを準備しました。続けて自動チェックを実行してください。`
+              : "デモ準備結果を確認してください。";
+
+          renderRawOutput();
+          showToast("営業デモデータを準備しました。");
+        } catch (error) {
+          setPill(
+            els.demoPrepareStatus,
+            "error",
+            "エラー"
+          );
+          els.demoVerification.textContent =
+            errorMessage(error);
+          showToast(errorMessage(error), "error");
+          throw error;
+        }
+      }
+
+      function updateDemoCounts(counts = {}) {
+        els.scheduleCount.textContent =
+          Number(counts.schedules || 0);
+        els.dailyCheckCount.textContent =
+          Number(counts.daily_checks || 0);
+        els.activityCount.textContent =
+          Number(counts.activity_records || 0);
+        els.transportCount.textContent =
+          Number(counts.transport_runs || 0);
+        els.guardianRequestCount.textContent =
+          Number(counts.guardian_requests || 0);
+        els.taskCount.textContent =
+          Number(counts.open_tasks || 0);
+      }
+
+      function pageUrl(definition) {
+        configRequired();
+        const base = CONFIG.URLS[definition.urlKey];
+        if (!base) return "";
+
+        if (
+          definition.sales &&
+          definition.urlKey !== "supportProgram"
+        ) {
+          return CONFIG.utils.pageUrl(
+            definition.urlKey,
+            { demo: true }
+          );
+        }
+
+        if (definition.urlKey === "systemCheck") {
+          return CONFIG.utils.pageUrl(
+            "systemCheck",
+            { demo: true }
+          );
+        }
+
+        return base;
+      }
+
+      function renderUrls() {
+        if (!CONFIG) {
+          els.urlList.innerHTML =
+            '<div class="notice notice-warning">config.jsを読み込めないためURLを表示できません。</div>';
+          return;
+        }
+
+        els.urlList.innerHTML = PAGE_DEFINITIONS.map(
+          (definition) => {
+            const url = pageUrl(definition);
+            const stateValue =
+              state.pageStates[definition.key];
+            const statusText =
+              stateValue === true
+                ? "公開確認OK"
+                : stateValue === false
+                  ? definition.currentRequired
+                    ? "公開要確認"
+                    : "今後のSTEPで作成"
+                  : "未確認";
+
+            const statusColor =
+              stateValue === true
+                ? "var(--success)"
+                : stateValue === false &&
+                    definition.currentRequired
+                  ? "var(--danger)"
+                  : "var(--muted)";
+
+            return `
+              <div class="url-item">
+                <div>
+                  <div class="url-name">${escapeHtml(definition.title)}</div>
+                  <span class="url-note">${escapeHtml(definition.note)}</span>
+                  <div class="page-status" style="color:${statusColor}">
+                    ${escapeHtml(statusText)}
+                  </div>
+                </div>
+                <div class="url-value">${escapeHtml(url)}</div>
+                <div class="url-actions">
+                  <a class="btn btn-secondary btn-small" href="${escapeHtml(url)}" target="_blank" rel="noopener">
+                    開く
+                  </a>
+                  <button class="btn btn-secondary btn-small" type="button" data-copy-url="${escapeHtml(url)}">
+                    コピー
+                  </button>
+                </div>
+              </div>
+            `;
+          }
+        ).join("");
+
+        $$("[data-copy-url]").forEach((button) => {
+          button.addEventListener("click", async () => {
+            await copyText(button.dataset.copyUrl || "");
+            showToast("URLをコピーしました。");
+          });
+        });
+      }
+
+      async function checkPageUrls() {
+        configRequired();
+        setPill(els.pageStatus, "running", "確認中");
+
+        for (const definition of PAGE_DEFINITIONS) {
+          const url = pageUrl(definition);
+
+          try {
+            const response = await fetch(url, {
+              method: "GET",
+              cache: "no-store",
+            });
+
+            state.pageStates[definition.key] =
+              response.ok;
+          } catch {
+            state.pageStates[definition.key] =
+              false;
+          }
+        }
+
+        renderUrls();
+
+        const required = PAGE_DEFINITIONS.filter(
+          (definition) => definition.currentRequired
+        );
+
+        const requiredOk = required.every(
+          (definition) =>
+            state.pageStates[definition.key] === true
+        );
+
+        setPill(
+          els.pageStatus,
+          requiredOk ? "ok" : "warning",
+          requiredOk ? "現STEP公開OK" : "公開要確認"
+        );
+
+        showToast(
+          requiredOk
+            ? "config.jsとsystem-check.htmlの公開を確認しました。"
+            : "現STEPの公開URLを確認してください。"
+        );
+      }
+
+      function urlsForCopy(salesOnly) {
+        return PAGE_DEFINITIONS.filter(
+          (definition) =>
+            salesOnly ? definition.sales : true
+        )
+          .map(
+            (definition) =>
+              `${definition.title}\n${pageUrl(definition)}`
+          )
+          .join("\n\n");
+      }
+
+      async function copyText(text) {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+      }
+
+      function updateScores() {
+        const autoPassed = CHECK_KEYS.filter(
+          (key) => state.checks[key] === true
+        ).length;
+
+        setPill(
+          els.automaticOverallStatus,
+          autoPassed === CHECK_KEYS.length
+            ? "ok"
+            : autoPassed > 0
+              ? "warning"
+              : "neutral",
+          `${autoPassed} / ${CHECK_KEYS.length}`
+        );
+
+        const manualChecks = $$("[data-manual-check]");
+        const manualPassed = manualChecks.filter(
+          (checkbox) => checkbox.checked
+        ).length;
+
+        setPill(
+          els.manualStatus,
+          manualPassed === manualChecks.length
+            ? "ok"
+            : manualPassed > 0
+              ? "warning"
+              : "neutral",
+          `${manualPassed} / ${manualChecks.length}`
+        );
+
+        const totalPassed = autoPassed + manualPassed;
+        const total = CHECK_KEYS.length + manualChecks.length;
+        els.overallScore.textContent =
+          `${totalPassed} / ${total}`;
+
+        if (
+          autoPassed === CHECK_KEYS.length &&
+          manualPassed === manualChecks.length
+        ) {
+          els.overallTitle.textContent =
+            "営業前チェックはすべて完了です";
+          els.overallMessage.textContent =
+            "自動検査と実機確認が完了しています。営業デモに使用できます。";
+        } else if (autoPassed === CHECK_KEYS.length) {
+          els.overallTitle.textContent =
+            "基盤の自動チェックは完了です";
+          els.overallMessage.textContent =
+            "各画面完成後、岩口様にしかできない実機8項目を確認してください。";
+        } else {
+          els.overallTitle.textContent =
+            "システム最終確認は未完了です";
+          els.overallMessage.textContent =
+            "管理コード保存後、デモ準備と自動チェックを実行してください。";
+        }
+
+        const configOk = state.checks.config === true;
+        const healthOk = state.checks.health === true;
+        const adminOk = state.checks.admin === true;
+        const tablesOk = state.checks.tables === true;
+        const phoneOk = state.checks.phone === true;
+        const domainsOk = state.checks.domains === true;
+        const bucketOk = state.checks.bucket === true;
+
+        const stepPassed =
+          configOk &&
+          healthOk &&
+          adminOk &&
+          tablesOk &&
+          phoneOk &&
+          domainsOk &&
+          bucketOk;
+
+        if (stepPassed) {
+          els.stepResult.style.borderColor = "#acd6bc";
+          els.stepResult.style.background = "#f3fbf6";
+          els.stepResultTitle.textContent =
+            "STEP HOUKAGO-5 基盤検査OK";
+          els.stepResultMessage.textContent =
+            "Worker、管理認証、29テーブル、電話番号正規化、5領域、private写真バケットは正常です。";
+        } else {
+          els.stepResult.style.borderColor = "var(--line)";
+          els.stepResult.style.background = "#fff";
+          els.stepResultTitle.textContent =
+            "STEP HOUKAGO-5は未確認です";
+          els.stepResultMessage.textContent =
+            "管理コードを保存し、自動チェックを実行してください。";
+        }
+      }
+
+      function bindEvents() {
+        els.saveAdminCodeButton.addEventListener(
+          "click",
+          () => {
+            try {
+              saveAdminCode(
+                els.adminCodeInput.value
+              );
+              showToast("管理コードを保存しました。");
+            } catch (error) {
+              showToast(errorMessage(error), "error");
+            }
+          }
+        );
+
+        els.clearAdminCodeButton.addEventListener(
+          "click",
+          () => {
+            clearAdminCode();
+            showToast("管理コードを削除しました。");
+          }
+        );
+
+        els.adminCodeInput.addEventListener(
+          "keydown",
+          (event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              els.saveAdminCodeButton.click();
+            }
+          }
+        );
+
+        const demoHandler = (button) =>
+          withButton(
+            button,
+            "準備中…",
+            prepareDemo
+          ).catch(() => {});
+
+        els.demoPrepareButton.addEventListener(
+          "click",
+          () => demoHandler(els.demoPrepareButton)
+        );
+
+        els.demoPrepareTopButton.addEventListener(
+          "click",
+          () => demoHandler(els.demoPrepareTopButton)
+        );
+
+        els.runAllButton.addEventListener(
+          "click",
+          () =>
+            withButton(
+              els.runAllButton,
+              "確認中…",
+              runAllChecks
+            ).catch((error) => {
+              showToast(
+                errorMessage(error),
+                "error"
+              );
+            })
+        );
+
+        els.checkPageUrlsButton.addEventListener(
+          "click",
+          () =>
+            withButton(
+              els.checkPageUrlsButton,
+              "確認中…",
+              checkPageUrls
+            ).catch((error) => {
+              showToast(
+                errorMessage(error),
+                "error"
+              );
+            })
+        );
+
+        const copySales = async () => {
+          await copyText(urlsForCopy(true));
+          showToast("営業用URLをコピーしました。");
+        };
+
+        els.copySalesUrlsTopButton.addEventListener(
+          "click",
+          copySales
+        );
+        els.copySalesUrlsButton.addEventListener(
+          "click",
+          copySales
+        );
+
+        els.copyAllUrlsButton.addEventListener(
+          "click",
+          async () => {
+            await copyText(urlsForCopy(false));
+            showToast("全URLをコピーしました。");
+          }
+        );
+
+        els.openOwnerDemoButton.addEventListener(
+          "click",
+          () => {
+            configRequired();
+            window.open(
+              CONFIG.utils.pageUrl(
+                "owner",
+                { demo: true, date: selectedCheckDate() }
+              ),
+              "_blank",
+              "noopener"
+            );
+          }
+        );
+
+        $$("[data-manual-check]").forEach(
+          (checkbox) => {
+            checkbox.addEventListener(
+              "change",
+              updateScores
+            );
+          }
+        );
+      }
+
+      function initializeDemoMode() {
+        if (!CONFIG) return;
+
+        if (CONFIG.utils.isDemoMode()) {
+          CONFIG.utils.ensureDemoAdminCode();
+        }
+
+        updateAdminCodeStatus();
+      }
+
+      function start() {
+        initializeSummary();
+        initializeDemoMode();
+        renderUrls();
+        bindEvents();
+        updateScores();
+      }
+
+      start();
+    })();
+  </script>
+</body>
+</html>
