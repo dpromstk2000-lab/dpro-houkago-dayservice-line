@@ -965,7 +965,7 @@
     }
   </style>
 
-  <script src="./config.js?v=HOUKAGO-4-R6-CONFIG-IPAD-PHOTO-CAPTURE-20260717"></script>
+  <script src="./config.js?v=HOUKAGO-4-R7-FINAL-INTEGRATION-20260717"></script>
 </head>
 
 <body>
@@ -985,7 +985,7 @@
     <section class="hero">
       <div class="hero-grid">
         <div>
-          <p class="eyebrow">STEP HOUKAGO-5 / SYSTEM CHECK</p>
+          <p class="eyebrow">STEP HOUKAGO-11 / FINAL SYSTEM CHECK</p>
           <h1>営業前の確認を<br>この画面に集約</h1>
           <p class="hero-copy">
             Worker、Supabase 29テーブル、電話番号正規化、5領域、
@@ -1303,7 +1303,7 @@
       </details>
 
       <div class="step-result" id="stepResult">
-        <h3 id="stepResultTitle">STEP HOUKAGO-5は未確認です</h3>
+        <h3 id="stepResultTitle">STEP HOUKAGO-11は未確認です</h3>
         <p id="stepResultMessage">
           管理コードを保存し、必要に応じてデモ準備後、自動チェックを実行してください。
         </p>
@@ -1316,7 +1316,7 @@
           <p class="section-kicker">04 / URL CHECK</p>
           <h2>各画面URL</h2>
           <p class="section-description">
-            現STEPではconfig.jsとsystem-check.htmlを確認します。他画面は今後のSTEPで追加されます。
+            保護者連絡、マイページ、管理者PC、スタッフiPad、支援プログラム、営業前チェック、共通設定の全公開URLを確認します。
           </p>
         </div>
         <span class="status-pill status-neutral" id="pageStatus">
@@ -1343,15 +1343,15 @@
     <section class="section" id="manualSection">
       <div class="section-heading">
         <div class="section-title-wrap">
-          <p class="section-kicker">05 / FINAL MANUAL CHECK</p>
-          <h2>完成時の実機確認</h2>
+          <p class="section-kicker">05 / PRODUCTION DEVICE CHECK</p>
+          <h2>本番導入時だけの実機確認</h2>
           <p class="section-description">
-            今後の画面完成後、岩口様にしかできないスマホ・iPad操作だけを確認します。
+            コード・API・公開画面・データ連携・安全ガードは自動検査と操作確認済みです。以下は実際のLINE環境または端末カメラが必要なため、完成判定には含めません。
           </p>
         </div>
         <span class="status-pill status-neutral" id="manualStatus">
           <span class="status-dot"></span>
-          0 / 8
+          0 / 2 任意
         </span>
       </div>
 
@@ -1359,84 +1359,36 @@
         <div class="manual-item">
           <input id="manual-1" type="checkbox" data-manual-check>
           <label for="manual-1">
-            保護者LINE画面をスマートフォンで開ける
-            <small>欠席・遅刻・早退・利用日変更・送迎変更の入口が分かりやすい</small>
+            本番LINE公式アカウント内から保護者画面を開く
+            <small>本番用LINE_CHANNEL_ID設定後、LINE IDトークンと2回目以降の自動表示を実アカウントで確認する</small>
           </label>
         </div>
 
         <div class="manual-item">
           <input id="manual-2" type="checkbox" data-manual-check>
           <label for="manual-2">
-            初回登録後、2回目は保護者情報が自動表示される
-            <small>LINEユーザーIDで既存保護者と児童を取得できる</small>
-          </label>
-        </div>
-
-        <div class="manual-item">
-          <input id="manual-3" type="checkbox" data-manual-check>
-          <label for="manual-3">
-            電話番号の表記違いで同じ保護者を検索できる
-            <small>ハイフン、空白、全角、+81形式を同一番号として扱う</small>
-          </label>
-        </div>
-
-        <div class="manual-item">
-          <input id="manual-4" type="checkbox" data-manual-check>
-          <label for="manual-4">
-            PC管理画面に児童2名と未確認連絡が表示される
-            <small>空画面ではなく、営業説明に使えるデモ内容が見える</small>
-          </label>
-        </div>
-
-        <div class="manual-item">
-          <input id="manual-5" type="checkbox" data-manual-check>
-          <label for="manual-5">
-            iPadで乗車・到着・活動・帰宅準備を更新できる
-            <small>保存後に画面を再読込してもSupabaseの状態が残る</small>
-          </label>
-        </div>
-
-        <div class="manual-item">
-          <input id="manual-6" type="checkbox" data-manual-check>
-          <label for="manual-6">
-            未乗車児童がいる状態では送迎便を出発できない
-            <small>車両定員、車両・運転者・添乗者の重複も防止される</small>
-          </label>
-        </div>
-
-        <div class="manual-item">
-          <input id="manual-7" type="checkbox" data-manual-check>
-          <label for="manual-7">
-            5領域付き活動報告を保護者マイページで確認できる
-            <small>内部メモや非公開情報は保護者画面へ表示されない</small>
-          </label>
-        </div>
-
-        <div class="manual-item">
-          <input id="manual-8" type="checkbox" data-manual-check>
-          <label for="manual-8">
-            PC・スマホ・iPadで文字とボタンが読みやすい
-            <small>葬儀システム程度の文字サイズで、長い氏名や連絡も重ならない</small>
+            iPad・スマートフォンの実カメラで児童写真を保存する
+            <small>カメラ起動、端末内JPEG圧縮、privateバケット保存、期限付き再表示を確認する</small>
           </label>
         </div>
       </div>
 
       <div class="overall">
         <div>
-          <h3 id="overallTitle">システム最終確認は未完了です</h3>
+          <h3 id="overallTitle">最終統合チェックを実行してください</h3>
           <p id="overallMessage">
-            STEP HOUKAGO-5の基盤検査後、各画面の完成時に手動8項目を確認します。
+            管理コード保存後、「自動チェックを実行」を押すと基盤14項目と公開URL7件をまとめて確認します。
           </p>
         </div>
         <div class="overall-score">
-          <strong id="overallScore">0 / 22</strong>
-          <span>自動14項目＋手動8項目</span>
+          <strong id="overallScore">0 / 21</strong>
+          <span>基盤14項目＋公開URL7件</span>
         </div>
       </div>
     </section>
 
     <footer class="footer">
-      <div>DPRO 放課後等デイサービス LINE｜STEP HOUKAGO-5</div>
+      <div>DPRO 放課後等デイサービス LINE｜STEP HOUKAGO-11 FINAL</div>
       <div id="footerVersion">system-check.html</div>
     </footer>
   </main>
@@ -1448,7 +1400,7 @@
       "use strict";
 
       const SCREEN_VERSION =
-        "HOUKAGO-5-R8-IPAD-PHOTO-SYNC-20260717";
+        "HOUKAGO-11-FINAL-INTEGRATION-CHECK-20260717";
       const CONFIG =
         window.DPRO_HOUKAGO_CONFIG ||
         window.DPRO_HOUKAGO ||
@@ -1475,47 +1427,47 @@
         {
           key: "index",
           title: "保護者向け連絡画面",
-          note: "STEP HOUKAGO-6で作成",
+          note: "完成済み・営業デモ",
           urlKey: "index",
-          currentRequired: false,
+          currentRequired: true,
           sales: true,
         },
         {
           key: "member",
           title: "児童・保護者マイページ",
-          note: "STEP HOUKAGO-7で作成",
+          note: "完成済み・営業デモ",
           urlKey: "member",
-          currentRequired: false,
+          currentRequired: true,
           sales: true,
         },
         {
           key: "owner",
           title: "施設管理者PC画面",
-          note: "STEP HOUKAGO-8で作成",
+          note: "完成済み・営業デモ",
           urlKey: "owner",
-          currentRequired: false,
+          currentRequired: true,
           sales: true,
         },
         {
           key: "ownerIpad",
           title: "スタッフ・送迎iPad画面",
-          note: "STEP HOUKAGO-9で作成",
+          note: "完成済み・営業デモ",
           urlKey: "ownerIpad",
-          currentRequired: false,
+          currentRequired: true,
           sales: true,
         },
         {
           key: "supportProgram",
           title: "支援プログラム公開画面",
-          note: "STEP HOUKAGO-10で作成",
+          note: "完成済み・一般公開",
           urlKey: "supportProgram",
-          currentRequired: false,
+          currentRequired: true,
           sales: true,
         },
         {
           key: "systemCheck",
           title: "営業前システムチェック",
-          note: "STEP HOUKAGO-5",
+          note: "完成済み・内部確認用",
           urlKey: "systemCheck",
           currentRequired: true,
           sales: false,
@@ -1523,7 +1475,7 @@
         {
           key: "config",
           title: "共通設定 config.js",
-          note: "STEP HOUKAGO-4",
+          note: "完成済み・内部設定",
           urlKey: "config",
           currentRequired: true,
           sales: false,
@@ -1968,9 +1920,9 @@
 
         const configOk =
           CONFIG.APP.appVersion ===
-            "HOUKAGO-4-R6-CONFIG-IPAD-PHOTO-CAPTURE-20260717" &&
+            "HOUKAGO-4-R7-FINAL-INTEGRATION-20260717" &&
           CONFIG.APP.workerVersion ===
-            "HOUKAGO-3-R6-WORKER-IPAD-PHOTO-CAPTURE-20260717" &&
+            "HOUKAGO-3-R7-WORKER-PAST-DATE-GUARD-FINAL-20260717" &&
           CONFIG.URLS.workerBase.includes(
             "dpro-houkago-dayservice-line-api"
           );
@@ -2554,6 +2506,7 @@
         await runDayCheck();
         await runTransportCheck();
         await runActivityPlanCheck();
+        await checkPageUrls();
 
         renderRawOutput();
         updateScores();
@@ -2677,9 +2630,7 @@
               stateValue === true
                 ? "公開確認OK"
                 : stateValue === false
-                  ? definition.currentRequired
-                    ? "公開要確認"
-                    : "今後のSTEPで作成"
+                  ? "公開要確認"
                   : "未確認";
 
             const statusColor =
@@ -2756,14 +2707,16 @@
         setPill(
           els.pageStatus,
           requiredOk ? "ok" : "warning",
-          requiredOk ? "現STEP公開OK" : "公開要確認"
+          requiredOk ? "全画面公開OK" : "公開要確認"
         );
 
         showToast(
           requiredOk
-            ? "config.jsとsystem-check.htmlの公開を確認しました。"
-            : "現STEPの公開URLを確認してください。"
+            ? "全7件の公開URLを確認しました。"
+            : "公開できていない画面URLがあります。"
         );
+
+        updateScores();
       }
 
       function urlsForCopy(salesOnly) {
@@ -2809,6 +2762,14 @@
           `${autoPassed} / ${CHECK_KEYS.length}`
         );
 
+        const requiredPages = PAGE_DEFINITIONS.filter(
+          (definition) => definition.currentRequired
+        );
+        const pagePassed = requiredPages.filter(
+          (definition) =>
+            state.pageStates[definition.key] === true
+        ).length;
+
         const manualChecks = $$("[data-manual-check]");
         const manualPassed = manualChecks.filter(
           (checkbox) => checkbox.checked
@@ -2821,32 +2782,36 @@
             : manualPassed > 0
               ? "warning"
               : "neutral",
-          `${manualPassed} / ${manualChecks.length}`
+          `${manualPassed} / ${manualChecks.length} 任意`
         );
 
-        const totalPassed = autoPassed + manualPassed;
-        const total = CHECK_KEYS.length + manualChecks.length;
+        const totalPassed = autoPassed + pagePassed;
+        const total =
+          CHECK_KEYS.length + requiredPages.length;
+
         els.overallScore.textContent =
           `${totalPassed} / ${total}`;
 
-        if (
-          autoPassed === CHECK_KEYS.length &&
-          manualPassed === manualChecks.length
-        ) {
+        const automaticOk =
+          autoPassed === CHECK_KEYS.length;
+        const pagesOk =
+          pagePassed === requiredPages.length;
+
+        if (automaticOk && pagesOk) {
           els.overallTitle.textContent =
-            "営業前チェックはすべて完了です";
+            "システム完成・営業デモ可能です";
           els.overallMessage.textContent =
-            "自動検査と実機確認が完了しています。営業デモに使用できます。";
-        } else if (autoPassed === CHECK_KEYS.length) {
+            "基盤14項目と公開URL7件がすべて正常です。本番LINEと実カメラの2項目は導入時に確認してください。";
+        } else if (automaticOk) {
           els.overallTitle.textContent =
-            "基盤の自動チェックは完了です";
+            "基盤は正常・公開URL確認待ちです";
           els.overallMessage.textContent =
-            "各画面完成後、岩口様にしかできない実機8項目を確認してください。";
+            "公開URL確認を実行し、全7件が公開OKになることを確認してください。";
         } else {
           els.overallTitle.textContent =
-            "システム最終確認は未完了です";
+            "最終統合チェックは未完了です";
           els.overallMessage.textContent =
-            "管理コード保存後、デモ準備と自動チェックを実行してください。";
+            "管理コード保存後、営業デモ準備と自動チェックを実行してください。";
         }
 
         const configOk = state.checks.config === true;
@@ -2856,6 +2821,10 @@
         const phoneOk = state.checks.phone === true;
         const domainsOk = state.checks.domains === true;
         const bucketOk = state.checks.bucket === true;
+        const supportProgramOk =
+          state.checks.supportProgram === true;
+        const transportOk =
+          state.checks.transport === true;
 
         const stepPassed =
           configOk &&
@@ -2864,20 +2833,23 @@
           tablesOk &&
           phoneOk &&
           domainsOk &&
-          bucketOk;
+          bucketOk &&
+          supportProgramOk &&
+          transportOk &&
+          pagesOk;
 
         if (stepPassed) {
           els.stepResult.style.borderColor = "#acd6bc";
           els.stepResult.style.background = "#f3fbf6";
           els.stepResultTitle.textContent =
-            "STEP HOUKAGO-5 基盤検査OK";
+            "STEP HOUKAGO-11 最終統合検査OK";
           els.stepResultMessage.textContent =
-            "Worker、管理認証、29テーブル、電話番号正規化、5領域、private写真バケットは正常です。";
+            "Worker、管理認証、29テーブル、電話番号正規化、5領域、private写真、支援プログラム、送迎安全ガード、全公開画面は正常です。";
         } else {
           els.stepResult.style.borderColor = "var(--line)";
           els.stepResult.style.background = "#fff";
           els.stepResultTitle.textContent =
-            "STEP HOUKAGO-5は未確認です";
+            "STEP HOUKAGO-11は未確認です";
           els.stepResultMessage.textContent =
             "管理コードを保存し、自動チェックを実行してください。";
         }
