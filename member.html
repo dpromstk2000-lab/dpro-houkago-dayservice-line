@@ -1,0 +1,2513 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#147d79">
+  <meta name="color-scheme" content="light">
+  <meta name="format-detection" content="telephone=no">
+  <title>DPRO放課後等デイサービス｜保護者マイページ</title>
+
+  <style>
+    :root {
+      --bg: #f7f4ec;
+      --surface: #ffffff;
+      --surface-soft: #edf8f7;
+      --surface-blue: #eef6fb;
+      --surface-warm: #fff8e8;
+      --line: #cddeda;
+      --line-strong: #a8c7c2;
+      --text: #18312f;
+      --muted: #5d716f;
+      --brand: #147d79;
+      --brand-dark: #0c5c59;
+      --brand-deep: #073f3d;
+      --brand-soft: #dff3f1;
+      --blue: #2c83a5;
+      --blue-soft: #e4f3f9;
+      --success: #247a4c;
+      --success-soft: #e7f6ed;
+      --warning: #a46308;
+      --warning-soft: #fff1d5;
+      --danger: #b5362f;
+      --danger-soft: #fdecea;
+      --purple: #6f4ba5;
+      --purple-soft: #f0eafb;
+      --gray-soft: #eef2f1;
+      --shadow: 0 14px 38px rgba(24, 49, 47, .09);
+      --shadow-soft: 0 8px 25px rgba(24, 49, 47, .055);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(20, 125, 121, .12), transparent 27rem),
+        radial-gradient(circle at bottom left, rgba(44, 131, 165, .07), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Sans",
+        "Yu Gothic UI",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    a,
+    input,
+    select {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .app-shell {
+      width: min(820px, 100%);
+      margin: 0 auto;
+      padding:
+        max(15px, env(safe-area-inset-top))
+        13px
+        max(54px, env(safe-area-inset-bottom));
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding: 4px 2px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 47px;
+      height: 47px;
+      flex: 0 0 auto;
+      border-radius: 15px;
+      background: linear-gradient(145deg, var(--brand), var(--brand-deep));
+      color: #fff;
+      font-size: 21px;
+      font-weight: 900;
+      box-shadow: 0 10px 23px rgba(20, 125, 121, .24);
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.28;
+      font-weight: 900;
+    }
+
+    .brand-subtitle {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .connection {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 36px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .connection-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #9aaba8;
+    }
+
+    .connection[data-state="online"] {
+      color: var(--success);
+      border-color: #b9ddc6;
+      background: var(--success-soft);
+    }
+
+    .connection[data-state="online"] .connection-dot {
+      background: var(--success);
+    }
+
+    .connection[data-state="error"] {
+      color: var(--danger);
+      border-color: #e4b4b0;
+      background: var(--danger-soft);
+    }
+
+    .connection[data-state="error"] .connection-dot {
+      background: var(--danger);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 25px 20px;
+      border: 1px solid rgba(20, 125, 121, .17);
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.98), rgba(237,248,247,.96));
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -75px;
+      bottom: -95px;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(20, 125, 121, .16), transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .07em;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(29px, 8vw, 41px);
+      line-height: 1.2;
+      letter-spacing: -.025em;
+    }
+
+    .hero-copy {
+      margin: 12px 0 0;
+      color: #506663;
+      font-size: 16px;
+    }
+
+    .hero-actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .section {
+      margin-top: 15px;
+      padding: 20px 17px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 13px;
+      margin-bottom: 17px;
+    }
+
+    .section-kicker {
+      margin: 0 0 3px;
+      color: var(--brand);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .06em;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.35;
+    }
+
+    .section-description {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status-pill,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .tone-muted {
+      background: var(--gray-soft);
+      color: #586b68;
+    }
+
+    .tone-brand {
+      background: var(--brand-soft);
+      color: var(--brand-dark);
+    }
+
+    .tone-blue {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .tone-success {
+      background: var(--success-soft);
+      color: var(--success);
+    }
+
+    .tone-warning {
+      background: var(--warning-soft);
+      color: var(--warning);
+    }
+
+    .tone-danger {
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .tone-purple {
+      background: var(--purple-soft);
+      color: var(--purple);
+    }
+
+    .notice {
+      padding: 13px 14px;
+      border-radius: 13px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .notice-info {
+      border: 1px solid #b8dbe8;
+      background: var(--surface-blue);
+      color: #315c6d;
+    }
+
+    .notice-warning {
+      border: 1px solid #e7c57f;
+      background: var(--warning-soft);
+      color: #744608;
+    }
+
+    .notice-danger {
+      border: 1px solid #e4b0ac;
+      background: var(--danger-soft);
+      color: #7d2925;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 52px;
+      padding: 12px 16px;
+      border: 1px solid transparent;
+      border-radius: 13px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 900;
+      transition:
+        transform .14s ease,
+        background .14s ease,
+        box-shadow .14s ease,
+        opacity .14s ease;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn:focus-visible,
+    .child-tab:focus-visible,
+    .segment-button:focus-visible {
+      outline: 3px solid rgba(20, 125, 121, .28);
+      outline-offset: 2px;
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: .55;
+      transform: none;
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      color: #fff;
+      box-shadow: 0 9px 22px rgba(20, 125, 121, .20);
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-dark);
+    }
+
+    .btn-secondary {
+      border-color: var(--line);
+      background: #fff;
+      color: var(--text);
+    }
+
+    .btn-small {
+      min-height: 42px;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    .guardian-card {
+      display: grid;
+      gap: 15px;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(145deg, var(--surface-soft), #fff);
+    }
+
+    .guardian-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 13px;
+    }
+
+    .guardian-name {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .guardian-detail {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .child-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 9px;
+    }
+
+    .child-tab {
+      min-height: 64px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .child-tab strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .child-tab span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .child-tab[aria-selected="true"] {
+      border-color: var(--brand);
+      background: var(--brand-soft);
+      box-shadow: inset 0 0 0 1px var(--brand);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .summary-card {
+      min-height: 105px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #fff;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .summary-value {
+      display: block;
+      margin-top: 5px;
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .summary-note {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .next-card {
+      overflow: hidden;
+      border: 1px solid rgba(20, 125, 121, .24);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(145deg, var(--brand-soft), #fff);
+    }
+
+    .next-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 17px;
+      border-bottom: 1px solid rgba(20, 125, 121, .15);
+    }
+
+    .next-date {
+      margin: 0;
+      font-size: 27px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    .next-date small {
+      margin-left: 4px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .next-card-body {
+      display: grid;
+      gap: 0;
+      padding: 5px 17px 13px;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: 126px minmax(0, 1fr);
+      gap: 11px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(20, 125, 121, .12);
+    }
+
+    .detail-row:last-child {
+      border-bottom: 0;
+    }
+
+    .detail-row dt {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .detail-row dd {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 850;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    .transport-box {
+      display: grid;
+      gap: 9px;
+      margin: 0 17px 17px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+    }
+
+    .transport-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 9px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .transport-row {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      padding-top: 9px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .transport-row strong {
+      overflow-wrap: anywhere;
+    }
+
+    .segment {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 5px;
+      padding: 5px;
+      border-radius: 13px;
+      background: var(--gray-soft);
+    }
+
+    .segment-button {
+      min-height: 43px;
+      padding: 8px 10px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .segment-button[aria-pressed="true"] {
+      background: #fff;
+      color: var(--brand-dark);
+      box-shadow: 0 3px 10px rgba(24, 49, 47, .08);
+    }
+
+    .month-group + .month-group {
+      margin-top: 18px;
+    }
+
+    .month-heading {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 9px;
+      color: var(--brand-dark);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .month-heading::before {
+      content: "";
+      width: 5px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--brand);
+    }
+
+    .schedule-list,
+    .activity-list,
+    .announcements {
+      display: grid;
+      gap: 10px;
+    }
+
+    .schedule-card,
+    .activity-card,
+    .announcement {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #fff;
+    }
+
+    .schedule-card {
+      display: grid;
+      grid-template-columns: 66px minmax(0, 1fr);
+      gap: 13px;
+    }
+
+    .date-block {
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      min-height: 69px;
+      padding: 7px;
+      border-radius: 13px;
+      background: var(--surface-soft);
+      color: var(--brand-dark);
+    }
+
+    .date-block strong {
+      font-size: 25px;
+      line-height: 1.1;
+    }
+
+    .date-block span {
+      margin-top: 2px;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .schedule-main {
+      min-width: 0;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 9px;
+    }
+
+    .schedule-title,
+    .activity-title,
+    .announcement h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.4;
+    }
+
+    .schedule-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 11px;
+      margin-top: 8px;
+      color: #516764;
+      font-size: 13px;
+    }
+
+    .schedule-note {
+      margin-top: 9px;
+      padding: 9px 10px;
+      border-radius: 10px;
+      background: var(--surface-warm);
+      color: #704a12;
+      font-size: 13px;
+    }
+
+    .mini-transport {
+      display: grid;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .mini-transport-row {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr) auto;
+      gap: 7px;
+      align-items: center;
+      padding: 8px 9px;
+      border-radius: 10px;
+      background: var(--surface-blue);
+      font-size: 12px;
+    }
+
+    .mini-transport-row strong {
+      overflow-wrap: anywhere;
+    }
+
+    .activity-card {
+      background:
+        linear-gradient(145deg, #fff, rgba(237, 248, 247, .58));
+    }
+
+    .activity-date {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .domain-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .domain-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--brand-soft);
+      color: var(--brand-dark);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .activity-report {
+      margin: 12px 0 0;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: #405956;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+
+    .announcement.pinned {
+      border-color: #b7d9e6;
+      background: var(--surface-blue);
+    }
+
+    .announcement p {
+      margin: 6px 0 0;
+      color: #526765;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+
+    .announcement time {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .empty-state {
+      padding: 23px 17px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 15px;
+      background: #fbfdfc;
+      text-align: center;
+    }
+
+    .empty-icon {
+      display: grid;
+      place-items: center;
+      width: 51px;
+      height: 51px;
+      margin: 0 auto 9px;
+      border-radius: 50%;
+      background: var(--brand-soft);
+      color: var(--brand-dark);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .empty-state h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .empty-state p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .registration-card {
+      padding: 21px 18px;
+      border: 1px solid #e7c57f;
+      border-radius: var(--radius-lg);
+      background: var(--warning-soft);
+    }
+
+    .registration-card h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .registration-card p {
+      margin: 8px 0 0;
+      color: #704a12;
+      font-size: 14px;
+    }
+
+    .contact-card {
+      display: grid;
+      gap: 12px;
+      padding: 17px;
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(145deg, var(--brand-deep), var(--brand-dark));
+      color: #fff;
+    }
+
+    .contact-card h2 {
+      color: #fff;
+    }
+
+    .contact-card p {
+      margin: 0;
+      color: rgba(255,255,255,.82);
+      font-size: 14px;
+    }
+
+    .contact-phone {
+      display: block;
+      font-size: 25px;
+      font-weight: 900;
+      text-decoration: none;
+      letter-spacing: .015em;
+    }
+
+    .footer {
+      padding: 21px 6px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      padding: 25px;
+      background: rgba(247, 244, 236, .82);
+      backdrop-filter: blur(4px);
+    }
+
+    .loading-box {
+      width: min(330px, 100%);
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: #fff;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .spinner {
+      width: 43px;
+      height: 43px;
+      margin: 0 auto 13px;
+      border: 4px solid var(--brand-soft);
+      border-top-color: var(--brand);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    .loading-box strong {
+      display: block;
+      font-size: 17px;
+    }
+
+    .loading-box span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toast-area {
+      position: fixed;
+      right: 14px;
+      bottom: max(14px, env(safe-area-inset-bottom));
+      z-index: 300;
+      display: grid;
+      gap: 8px;
+      width: min(410px, calc(100% - 28px));
+      pointer-events: none;
+    }
+
+    .toast {
+      padding: 14px 15px;
+      border-radius: 13px;
+      background: #173f3d;
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+      font-size: 14px;
+      font-weight: 800;
+      animation: toast-in .18s ease-out;
+    }
+
+    .toast.error {
+      background: #8f2b27;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (min-width: 700px) {
+      .app-shell {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .hero {
+        padding: 31px 28px;
+      }
+
+      .section {
+        padding: 24px 22px;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 540px) {
+      .connection {
+        width: 36px;
+        padding: 0;
+        justify-content: center;
+        font-size: 0;
+      }
+
+      .hero-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        display: grid;
+      }
+
+      .section-heading .btn {
+        width: 100%;
+      }
+
+      .status-pill {
+        justify-self: start;
+      }
+
+      .guardian-top {
+        display: grid;
+      }
+
+      .guardian-top .btn {
+        width: 100%;
+      }
+
+      .schedule-card {
+        grid-template-columns: 58px minmax(0, 1fr);
+        gap: 10px;
+      }
+
+      .detail-row {
+        grid-template-columns: 1fr;
+        gap: 3px;
+      }
+
+      .detail-row dd {
+        text-align: left;
+      }
+
+      .transport-row,
+      .mini-transport-row {
+        grid-template-columns: 58px minmax(0, 1fr);
+      }
+
+      .transport-row span:last-child,
+      .mini-transport-row span:last-child {
+        grid-column: 2;
+      }
+    }
+  </style>
+
+  <script src="./config.js?v=HOUKAGO-4-R4-CONFIG-WORKER-VERSION-20260717"></script>
+</head>
+
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">放</div>
+        <div>
+          <h1 class="brand-title" id="brandTitle">DPRO放課後等デイサービス</h1>
+          <p class="brand-subtitle">保護者マイページ</p>
+        </div>
+      </div>
+
+      <div class="connection" id="connectionStatus" data-state="checking">
+        <span class="connection-dot"></span>
+        <span id="connectionText">確認中</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">GUARDIAN MY PAGE</p>
+        <h1>利用予定と活動の様子を<br>いつでも確認</h1>
+        <p class="hero-copy">
+          児童ごとの利用予定、送迎状況、保護者へ共有された活動報告、施設からのお知らせを確認できます。
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" id="contactPageLink" href="./index.html">
+            施設へ連絡する
+          </a>
+          <button class="btn btn-secondary" id="refreshButton" type="button">
+            最新情報へ更新
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="systemErrorSection" hidden>
+      <div class="notice notice-danger" id="systemErrorMessage">
+        システム設定を読み込めませんでした。
+      </div>
+    </section>
+
+    <section class="section" id="registrationSection" hidden>
+      <div class="registration-card">
+        <h2>初回登録が必要です</h2>
+        <p>
+          保護者マイページを利用するには、先に保護者連絡画面で電話番号と児童番号を確認してください。
+        </p>
+        <a class="btn btn-primary" id="registrationLink" href="./index.html" style="margin-top:16px;width:100%;">
+          初回登録画面を開く
+        </a>
+      </div>
+    </section>
+
+    <div id="memberContent" hidden>
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">GUARDIAN & CHILD</p>
+            <h2>ご利用者情報</h2>
+            <p class="section-description">
+              表示する児童を選択してください。
+            </p>
+          </div>
+          <span class="status-pill tone-success">連携済み</span>
+        </div>
+
+        <div class="guardian-card">
+          <div class="guardian-top">
+            <div>
+              <h3 class="guardian-name" id="guardianName">保護者名</h3>
+              <p class="guardian-detail" id="guardianDetail">登録情報</p>
+            </div>
+            <a class="btn btn-secondary btn-small" id="contactPageLinkSmall" href="./index.html">
+              連絡画面
+            </a>
+          </div>
+
+          <div class="child-tabs" id="childTabs"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">OVERVIEW</p>
+            <h2 id="overviewTitle">現在の確認</h2>
+            <p class="section-description">
+              選択した児童の直近情報です。
+            </p>
+          </div>
+          <span class="status-pill tone-muted" id="lastUpdatedPill">未更新</span>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <span class="summary-label">次回利用</span>
+            <strong class="summary-value" id="nextVisitValue">―</strong>
+            <span class="summary-note" id="nextVisitNote">予定を確認中</span>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">これからの予定</span>
+            <strong class="summary-value" id="upcomingCountValue">0件</strong>
+            <span class="summary-note">今後90日間</span>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">共有済み活動報告</span>
+            <strong class="summary-value" id="activityCountValue">0件</strong>
+            <span class="summary-note">施設から保護者へ共有済み</span>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">児童番号</span>
+            <strong class="summary-value" id="childNumberValue">―</strong>
+            <span class="summary-note" id="schoolValue">学校情報</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="nextScheduleSection">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">NEXT VISIT</p>
+            <h2>次回の利用予定</h2>
+          </div>
+        </div>
+
+        <div id="nextScheduleContent"></div>
+      </section>
+
+      <section class="section" id="scheduleSection">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">SCHEDULE</p>
+            <h2>利用予定</h2>
+            <p class="section-description">
+              直近30日から今後90日までを表示します。
+            </p>
+          </div>
+        </div>
+
+        <div class="segment" aria-label="利用予定の表示切替">
+          <button class="segment-button" id="upcomingFilterButton" type="button" aria-pressed="true">
+            これから
+          </button>
+          <button class="segment-button" id="recentFilterButton" type="button" aria-pressed="false">
+            最近を含む
+          </button>
+        </div>
+
+        <div id="scheduleList" style="margin-top:14px;"></div>
+      </section>
+
+      <section class="section" id="activitySection">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">ACTIVITY REPORT</p>
+            <h2>活動の様子</h2>
+            <p class="section-description">
+              施設が保護者向けに共有した内容だけを表示します。
+            </p>
+          </div>
+        </div>
+
+        <div class="notice notice-info" style="margin-bottom:13px;">
+          職員間の申し送り、事故記録、個別支援計画の内部記録などは、この画面には表示されません。
+        </div>
+
+        <div class="activity-list" id="activityList"></div>
+      </section>
+
+      <section class="section" id="announcementsSection">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">INFORMATION</p>
+            <h2>施設からのお知らせ</h2>
+          </div>
+        </div>
+
+        <div class="announcements" id="announcementsList"></div>
+      </section>
+    </div>
+
+    <section class="section">
+      <div class="contact-card">
+        <div>
+          <p class="section-kicker" style="color:#9fe1dd;">URGENT CONTACT</p>
+          <h2>緊急時・送迎直前の変更</h2>
+        </div>
+        <p>
+          安全に関わる内容や送迎直前の変更は、LINE送信だけでなく施設へ電話してください。
+        </p>
+        <a class="contact-phone" id="facilityPhoneLink" href="tel:0920000000">
+          092-000-0000
+        </a>
+        <span id="facilityHours" style="font-size:13px;color:rgba(255,255,255,.75);">
+          受付時間を確認中
+        </span>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div id="footerFacilityName">DPRO放課後等デイサービス</div>
+      <div>HOUKAGO-7-GUARDIAN-MEMBER-COMPLETE-20260717</div>
+    </footer>
+  </main>
+
+  <div class="loading-overlay" id="loadingOverlay" hidden>
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <strong id="loadingTitle">確認しています</strong>
+      <span id="loadingMessage">しばらくお待ちください。</span>
+    </div>
+  </div>
+
+  <div class="toast-area" id="toastArea" aria-live="polite"></div>
+
+  <script>
+    (function startGuardianMemberPage() {
+      "use strict";
+
+      const PAGE_VERSION =
+        "HOUKAGO-7-GUARDIAN-MEMBER-COMPLETE-20260717";
+
+      const CONFIG =
+        window.DPRO_HOUKAGO_CONFIG ||
+        window.DPRO_HOUKAGO ||
+        null;
+
+      const state = {
+        facility: null,
+        guardian: null,
+        children: [],
+        announcements: [],
+        selectedChildId: null,
+        scheduleFilter: "upcoming",
+        childCache: new Map(),
+        lastUpdatedAt: null,
+      };
+
+      const $ = (selector) => document.querySelector(selector);
+      const $$ = (selector) =>
+        Array.from(document.querySelectorAll(selector));
+
+      const els = {
+        connectionStatus: $("#connectionStatus"),
+        connectionText: $("#connectionText"),
+        brandTitle: $("#brandTitle"),
+        contactPageLink: $("#contactPageLink"),
+        contactPageLinkSmall: $("#contactPageLinkSmall"),
+        refreshButton: $("#refreshButton"),
+
+        systemErrorSection: $("#systemErrorSection"),
+        systemErrorMessage: $("#systemErrorMessage"),
+        registrationSection: $("#registrationSection"),
+        registrationLink: $("#registrationLink"),
+        memberContent: $("#memberContent"),
+
+        guardianName: $("#guardianName"),
+        guardianDetail: $("#guardianDetail"),
+        childTabs: $("#childTabs"),
+
+        overviewTitle: $("#overviewTitle"),
+        lastUpdatedPill: $("#lastUpdatedPill"),
+        nextVisitValue: $("#nextVisitValue"),
+        nextVisitNote: $("#nextVisitNote"),
+        upcomingCountValue: $("#upcomingCountValue"),
+        activityCountValue: $("#activityCountValue"),
+        childNumberValue: $("#childNumberValue"),
+        schoolValue: $("#schoolValue"),
+
+        nextScheduleContent: $("#nextScheduleContent"),
+        upcomingFilterButton: $("#upcomingFilterButton"),
+        recentFilterButton: $("#recentFilterButton"),
+        scheduleList: $("#scheduleList"),
+        activityList: $("#activityList"),
+        announcementsList: $("#announcementsList"),
+
+        facilityPhoneLink: $("#facilityPhoneLink"),
+        facilityHours: $("#facilityHours"),
+        footerFacilityName: $("#footerFacilityName"),
+
+        loadingOverlay: $("#loadingOverlay"),
+        loadingTitle: $("#loadingTitle"),
+        loadingMessage: $("#loadingMessage"),
+        toastArea: $("#toastArea"),
+      };
+
+      function configRequired() {
+        if (!CONFIG) {
+          throw new Error(
+            "共通設定を読み込めませんでした。時間をおいて再度お試しください。"
+          );
+        }
+        return CONFIG;
+      }
+
+      function escapeHtml(value) {
+        if (CONFIG?.utils?.escapeHtml) {
+          return CONFIG.utils.escapeHtml(value);
+        }
+
+        return String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function showToast(message, type = "success") {
+        const toast = document.createElement("div");
+        toast.className =
+          `toast${type === "error" ? " error" : ""}`;
+        toast.textContent = message;
+        els.toastArea.appendChild(toast);
+
+        window.setTimeout(() => {
+          toast.remove();
+        }, 4000);
+      }
+
+      function showLoading(title, message) {
+        els.loadingTitle.textContent = title;
+        els.loadingMessage.textContent = message;
+        els.loadingOverlay.hidden = false;
+      }
+
+      function hideLoading() {
+        els.loadingOverlay.hidden = true;
+      }
+
+      function errorMessage(error) {
+        return (
+          error?.message ||
+          "処理に失敗しました。時間をおいて再度お試しください。"
+        );
+      }
+
+      function setConnection(stateValue, text) {
+        els.connectionStatus.dataset.state = stateValue;
+        els.connectionText.textContent = text;
+      }
+
+      function identityReady() {
+        if (!CONFIG) return false;
+
+        return Boolean(
+          CONFIG.storage.get(
+            CONFIG.STORAGE_KEYS.lineIdToken,
+            ""
+          ) ||
+          CONFIG.storage.get(
+            CONFIG.STORAGE_KEYS.lineUserId,
+            ""
+          )
+        );
+      }
+
+      function captureIdentityFromUrl() {
+        configRequired();
+
+        const params = CONFIG.utils.getQueryParams();
+        const idToken =
+          params.get("id_token") ||
+          params.get("idToken");
+        const lineUserId =
+          params.get("line_user_id") ||
+          params.get("lineUserId");
+
+        if (idToken) {
+          CONFIG.storage.set(
+            CONFIG.STORAGE_KEYS.lineIdToken,
+            idToken
+          );
+        }
+
+        if (lineUserId) {
+          CONFIG.storage.set(
+            CONFIG.STORAGE_KEYS.lineUserId,
+            lineUserId
+          );
+        }
+
+        if (idToken || lineUserId) {
+          const cleanUrl = new URL(window.location.href);
+          [
+            "id_token",
+            "idToken",
+            "line_user_id",
+            "lineUserId",
+          ].forEach((key) => {
+            cleanUrl.searchParams.delete(key);
+          });
+
+          window.history.replaceState(
+            {},
+            document.title,
+            cleanUrl.toString()
+          );
+        }
+      }
+
+      function pageUrl(pageName) {
+        const demo =
+          CONFIG.utils.isDemoMode();
+
+        return CONFIG.utils.pageUrl(
+          pageName,
+          { demo }
+        );
+      }
+
+      function configureLinks() {
+        const contactUrl = pageUrl("index");
+
+        els.contactPageLink.href = contactUrl;
+        els.contactPageLinkSmall.href = contactUrl;
+        els.registrationLink.href = contactUrl;
+      }
+
+      function selectedChild() {
+        return (
+          state.children.find(
+            (child) =>
+              child.id === state.selectedChildId
+          ) || null
+        );
+      }
+
+      function addDays(dateText, days) {
+        const parts = String(dateText)
+          .split("-")
+          .map(Number);
+
+        if (
+          parts.length !== 3 ||
+          parts.some(Number.isNaN)
+        ) {
+          return dateText;
+        }
+
+        const date = new Date(
+          Date.UTC(parts[0], parts[1] - 1, parts[2])
+        );
+        date.setUTCDate(
+          date.getUTCDate() + Number(days || 0)
+        );
+        return date.toISOString().slice(0, 10);
+      }
+
+      function updateFacilityUi() {
+        const facility = state.facility;
+        if (!facility) return;
+
+        const name =
+          facility.facility_name ||
+          CONFIG.APP.facilityName;
+
+        els.brandTitle.textContent = name;
+        els.footerFacilityName.textContent = name;
+
+        const phone =
+          facility.phone || "092-000-0000";
+
+        els.facilityPhoneLink.textContent =
+          CONFIG.utils.formatPhone(phone) ||
+          phone;
+
+        els.facilityPhoneLink.href =
+          `tel:${CONFIG.utils.normalizePhone(phone)}`;
+
+        const weekdayHours =
+          `${CONFIG.utils.formatTime(
+            facility.default_service_start_time
+          )}～${CONFIG.utils.formatTime(
+            facility.default_service_end_time
+          )}`;
+
+        const holidayHours =
+          `${CONFIG.utils.formatTime(
+            facility.school_holiday_start_time
+          )}～${CONFIG.utils.formatTime(
+            facility.school_holiday_end_time
+          )}`;
+
+        els.facilityHours.textContent =
+          `平日利用 ${weekdayHours}／学校休業日 ${holidayHours}`;
+      }
+
+      function renderRegistrationRequired() {
+        els.registrationSection.hidden = false;
+        els.memberContent.hidden = true;
+      }
+
+      function renderMember() {
+        els.registrationSection.hidden = true;
+        els.memberContent.hidden = false;
+
+        els.guardianName.textContent =
+          `${state.guardian.full_name} 様`;
+
+        const relationship =
+          state.guardian.relationship
+            ? `（${state.guardian.relationship}）`
+            : "";
+
+        const phone =
+          CONFIG.utils.formatPhone(
+            state.guardian.phone
+          );
+
+        els.guardianDetail.textContent =
+          `${relationship} ${phone}`.trim();
+
+        if (
+          !state.selectedChildId ||
+          !state.children.some(
+            (child) =>
+              child.id === state.selectedChildId
+          )
+        ) {
+          const savedChildId =
+            CONFIG.storage.get(
+              CONFIG.STORAGE_KEYS
+                .selectedGuardianChildId,
+              ""
+            );
+
+          state.selectedChildId =
+            state.children.some(
+              (child) =>
+                child.id === savedChildId
+            )
+              ? savedChildId
+              : state.children[0]?.id || null;
+        }
+
+        renderChildTabs();
+        renderAnnouncements();
+      }
+
+      function renderChildTabs() {
+        els.childTabs.innerHTML =
+          state.children
+            .map((child) => {
+              const selected =
+                child.id === state.selectedChildId;
+
+              const school =
+                child.school?.school_name ||
+                "学校未登録";
+
+              return `
+                <button
+                  class="child-tab"
+                  type="button"
+                  data-child-id="${escapeHtml(child.id)}"
+                  aria-selected="${String(selected)}"
+                >
+                  <strong>${escapeHtml(child.full_name)}</strong>
+                  <span>${escapeHtml(child.grade || school)}</span>
+                </button>
+              `;
+            })
+            .join("");
+
+        $$("[data-child-id]").forEach((button) => {
+          button.addEventListener("click", async () => {
+            const childId =
+              button.dataset.childId;
+
+            if (
+              !childId ||
+              childId === state.selectedChildId
+            ) {
+              return;
+            }
+
+            state.selectedChildId = childId;
+
+            CONFIG.storage.set(
+              CONFIG.STORAGE_KEYS
+                .selectedGuardianChildId,
+              childId
+            );
+
+            renderChildTabs();
+
+            try {
+              await loadSelectedChildData(false);
+            } catch (error) {
+              showToast(
+                errorMessage(error),
+                "error"
+              );
+            }
+          });
+        });
+      }
+
+      function statusDefinition(status) {
+        return (
+          CONFIG.SCHEDULE_STATUSES?.[status] ||
+          {
+            label: status || "状況未設定",
+            shortLabel: status || "未設定",
+            tone: "muted",
+          }
+        );
+      }
+
+      function toneClass(tone) {
+        const allowed = new Set([
+          "muted",
+          "brand",
+          "blue",
+          "success",
+          "warning",
+          "danger",
+          "purple",
+        ]);
+
+        return `tone-${
+          allowed.has(tone)
+            ? tone
+            : "muted"
+        }`;
+      }
+
+      function activeUpcomingSchedule(schedule) {
+        const inactive = new Set([
+          "completed",
+          "absent",
+          "cancelled",
+        ]);
+
+        return (
+          schedule.service_date >=
+            CONFIG.utils.todayJst() &&
+          !inactive.has(schedule.status)
+        );
+      }
+
+      function selectedChildData() {
+        return (
+          state.childCache.get(
+            state.selectedChildId
+          ) || {
+            schedules: [],
+            activityReports: [],
+          }
+        );
+      }
+
+      function renderSelectedChildData() {
+        const child = selectedChild();
+        const data = selectedChildData();
+
+        if (!child) return;
+
+        const schedules =
+          data.schedules || [];
+        const activityReports =
+          data.activityReports || [];
+
+        const upcoming =
+          schedules.filter(
+            activeUpcomingSchedule
+          );
+
+        const nextSchedule =
+          upcoming[0] || null;
+
+        els.overviewTitle.textContent =
+          `${child.full_name}さんの現在`;
+
+        els.nextVisitValue.textContent =
+          nextSchedule
+            ? CONFIG.utils.formatDateShort(
+                nextSchedule.service_date,
+                true
+              )
+            : "予定なし";
+
+        els.nextVisitNote.textContent =
+          nextSchedule
+            ? statusDefinition(
+                nextSchedule.status
+              ).label
+            : "今後の利用予定はありません";
+
+        els.upcomingCountValue.textContent =
+          `${upcoming.length}件`;
+
+        els.activityCountValue.textContent =
+          `${activityReports.length}件`;
+
+        els.childNumberValue.textContent =
+          child.child_number || "―";
+
+        els.schoolValue.textContent =
+          [
+            child.school?.school_name,
+            child.grade,
+            child.class_name,
+          ]
+            .filter(Boolean)
+            .join("／") ||
+          "学校情報未登録";
+
+        state.lastUpdatedAt = new Date();
+
+        els.lastUpdatedPill.textContent =
+          `${CONFIG.utils.formatTime(
+            state.lastUpdatedAt
+          )} 更新`;
+
+        els.lastUpdatedPill.className =
+          "status-pill tone-success";
+
+        renderNextSchedule(nextSchedule);
+        renderSchedules(schedules);
+        renderActivities(activityReports);
+      }
+
+      function renderNextSchedule(schedule) {
+        if (!schedule) {
+          els.nextScheduleContent.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">予</div>
+              <h3>今後の利用予定はありません</h3>
+              <p>新しい予定が登録されると、こちらに表示されます。</p>
+            </div>
+          `;
+          return;
+        }
+
+        const status =
+          statusDefinition(schedule.status);
+
+        const pickupLabel =
+          CONFIG.utils.getLabel(
+            CONFIG.PICKUP_MODES,
+            schedule.pickup_mode,
+            schedule.pickup_mode || "未設定"
+          );
+
+        const dropoffLabel =
+          CONFIG.utils.getLabel(
+            CONFIG.DROPOFF_MODES,
+            schedule.dropoff_mode,
+            schedule.dropoff_mode || "未設定"
+          );
+
+        const transport =
+          Array.isArray(schedule.transport)
+            ? schedule.transport
+            : [];
+
+        els.nextScheduleContent.innerHTML = `
+          <div class="next-card">
+            <div class="next-card-header">
+              <div>
+                <p class="next-date">
+                  ${escapeHtml(
+                    CONFIG.utils.formatDate(
+                      schedule.service_date,
+                      { weekday: "short" }
+                    )
+                  )}
+                </p>
+              </div>
+              <span class="status-pill ${toneClass(status.tone)}">
+                ${escapeHtml(status.label)}
+              </span>
+            </div>
+
+            <dl class="next-card-body">
+              <div class="detail-row">
+                <dt>利用予定時間</dt>
+                <dd>${escapeHtml(
+                  timeRange(
+                    schedule.planned_arrival_time,
+                    schedule.planned_departure_time
+                  )
+                )}</dd>
+              </div>
+              <div class="detail-row">
+                <dt>お迎え</dt>
+                <dd>${escapeHtml(pickupLabel)}</dd>
+              </div>
+              <div class="detail-row">
+                <dt>帰宅方法</dt>
+                <dd>${escapeHtml(dropoffLabel)}</dd>
+              </div>
+              ${
+                schedule.pickup_location
+                  ? `
+                    <div class="detail-row">
+                      <dt>お迎え場所</dt>
+                      <dd>${escapeHtml(schedule.pickup_location)}</dd>
+                    </div>
+                  `
+                  : ""
+              }
+              ${
+                schedule.dropoff_location
+                  ? `
+                    <div class="detail-row">
+                      <dt>引渡し場所</dt>
+                      <dd>${escapeHtml(schedule.dropoff_location)}</dd>
+                    </div>
+                  `
+                  : ""
+              }
+              ${
+                schedule.current_status_note
+                  ? `
+                    <div class="detail-row">
+                      <dt>現在の状況</dt>
+                      <dd>${escapeHtml(schedule.current_status_note)}</dd>
+                    </div>
+                  `
+                  : ""
+              }
+            </dl>
+
+            ${renderTransportBox(transport)}
+          </div>
+        `;
+      }
+
+      function timeRange(start, end) {
+        const startText =
+          CONFIG.utils.formatTime(start);
+        const endText =
+          CONFIG.utils.formatTime(end);
+
+        if (startText && endText) {
+          return `${startText}～${endText}`;
+        }
+
+        return startText || endText || "時間未設定";
+      }
+
+      function transportDirectionLabel(direction) {
+        return CONFIG.utils.getLabel(
+          CONFIG.TRANSPORT_DIRECTIONS,
+          direction,
+          direction === "pickup"
+            ? "お迎え"
+            : "帰宅"
+        );
+      }
+
+      function boardingStatusLabel(status) {
+        return CONFIG.utils.getLabel(
+          CONFIG.BOARDING_STATUSES,
+          status,
+          status || "未確認"
+        );
+      }
+
+      function renderTransportBox(transport) {
+        if (!transport.length) {
+          return `
+            <div class="transport-box">
+              <div class="transport-title">
+                <span>送迎状況</span>
+                <span class="status-pill tone-muted">割当未登録</span>
+              </div>
+              <div style="color:var(--muted);font-size:13px;">
+                送迎便が登録されると、乗車・引渡し状況を表示します。
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="transport-box">
+            <div class="transport-title">
+              <span>送迎状況</span>
+              <span class="status-pill tone-blue">${transport.length}件</span>
+            </div>
+            ${transport
+              .map((item) => {
+                const statusDefinitionItem =
+                  CONFIG.BOARDING_STATUSES?.[
+                    item.boarding_status
+                  ] || {
+                    tone: "muted",
+                  };
+
+                return `
+                  <div class="transport-row">
+                    <span>${escapeHtml(
+                      transportDirectionLabel(
+                        item.direction
+                      )
+                    )}</span>
+                    <strong>${escapeHtml(
+                      item.location_name ||
+                      "場所未設定"
+                    )}</strong>
+                    <span class="status-pill ${toneClass(
+                      statusDefinitionItem.tone
+                    )}">
+                      ${escapeHtml(
+                        boardingStatusLabel(
+                          item.boarding_status
+                        )
+                      )}
+                    </span>
+                  </div>
+                `;
+              })
+              .join("")}
+          </div>
+        `;
+      }
+
+      function renderSchedules(schedules) {
+        const today =
+          CONFIG.utils.todayJst();
+
+        const filtered =
+          state.scheduleFilter === "upcoming"
+            ? schedules.filter(
+                (schedule) =>
+                  schedule.service_date >= today &&
+                  !["completed", "cancelled"].includes(
+                    schedule.status
+                  )
+              )
+            : schedules;
+
+        els.upcomingFilterButton.setAttribute(
+          "aria-pressed",
+          String(
+            state.scheduleFilter === "upcoming"
+          )
+        );
+
+        els.recentFilterButton.setAttribute(
+          "aria-pressed",
+          String(
+            state.scheduleFilter === "recent"
+          )
+        );
+
+        if (filtered.length === 0) {
+          els.scheduleList.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">予</div>
+              <h3>表示する利用予定はありません</h3>
+              <p>表示切替を変更するか、最新情報へ更新してください。</p>
+            </div>
+          `;
+          return;
+        }
+
+        const grouped = new Map();
+
+        filtered.forEach((schedule) => {
+          const month =
+            schedule.service_date.slice(0, 7);
+
+          if (!grouped.has(month)) {
+            grouped.set(month, []);
+          }
+
+          grouped.get(month).push(schedule);
+        });
+
+        els.scheduleList.innerHTML =
+          [...grouped.entries()]
+            .map(([month, rows]) => `
+              <section class="month-group">
+                <h3 class="month-heading">
+                  ${escapeHtml(formatMonth(month))}
+                </h3>
+                <div class="schedule-list">
+                  ${rows
+                    .map(renderScheduleCard)
+                    .join("")}
+                </div>
+              </section>
+            `)
+            .join("");
+      }
+
+      function formatMonth(month) {
+        const [year, monthNumber] =
+          month.split("-");
+
+        return `${Number(year)}年${Number(monthNumber)}月`;
+      }
+
+      function renderScheduleCard(schedule) {
+        const definition =
+          statusDefinition(schedule.status);
+        const date = new Date(
+          `${schedule.service_date}T00:00:00+09:00`
+        );
+
+        const day = String(
+          Number(
+            schedule.service_date.slice(8, 10)
+          )
+        );
+
+        const weekday =
+          new Intl.DateTimeFormat(
+            CONFIG.APP.locale,
+            {
+              timeZone: CONFIG.APP.timezone,
+              weekday: "short",
+            }
+          ).format(date);
+
+        const pickupLabel =
+          CONFIG.utils.getShortLabel(
+            CONFIG.PICKUP_MODES,
+            schedule.pickup_mode,
+            schedule.pickup_mode || "未設定"
+          );
+
+        const dropoffLabel =
+          CONFIG.utils.getShortLabel(
+            CONFIG.DROPOFF_MODES,
+            schedule.dropoff_mode,
+            schedule.dropoff_mode || "未設定"
+          );
+
+        const transport =
+          Array.isArray(schedule.transport)
+            ? schedule.transport
+            : [];
+
+        return `
+          <article class="schedule-card">
+            <div class="date-block">
+              <strong>${escapeHtml(day)}</strong>
+              <span>${escapeHtml(weekday)}</span>
+            </div>
+
+            <div class="schedule-main">
+              <div class="card-top">
+                <h4 class="schedule-title">
+                  ${escapeHtml(
+                    timeRange(
+                      schedule.planned_arrival_time,
+                      schedule.planned_departure_time
+                    )
+                  )}
+                </h4>
+                <span class="status-pill ${toneClass(definition.tone)}">
+                  ${escapeHtml(definition.shortLabel || definition.label)}
+                </span>
+              </div>
+
+              <div class="schedule-meta">
+                <span>迎え：${escapeHtml(pickupLabel)}</span>
+                <span>帰宅：${escapeHtml(dropoffLabel)}</span>
+              </div>
+
+              ${
+                schedule.current_status_note
+                  ? `
+                    <div class="schedule-note">
+                      ${escapeHtml(schedule.current_status_note)}
+                    </div>
+                  `
+                  : ""
+              }
+
+              ${
+                transport.length
+                  ? `
+                    <div class="mini-transport">
+                      ${transport
+                        .map((item) => `
+                          <div class="mini-transport-row">
+                            <span>${escapeHtml(
+                              transportDirectionLabel(
+                                item.direction
+                              )
+                            )}</span>
+                            <strong>${escapeHtml(
+                              item.location_name ||
+                              "場所未設定"
+                            )}</strong>
+                            <span>${escapeHtml(
+                              boardingStatusLabel(
+                                item.boarding_status
+                              )
+                            )}</span>
+                          </div>
+                        `)
+                        .join("")}
+                    </div>
+                  `
+                  : ""
+              }
+            </div>
+          </article>
+        `;
+      }
+
+      function participationLabel(status) {
+        return CONFIG.utils.getLabel(
+          CONFIG.ACTIVITY_PARTICIPATION_STATUSES,
+          status,
+          status || "参加状況未設定"
+        );
+      }
+
+      function renderActivities(reports) {
+        if (!reports.length) {
+          els.activityList.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">活</div>
+              <h3>共有済みの活動報告はありません</h3>
+              <p>施設が保護者向けに共有すると、こちらに表示されます。</p>
+            </div>
+          `;
+          return;
+        }
+
+        els.activityList.innerHTML =
+          reports
+            .map((report) => `
+              <article class="activity-card">
+                <div class="card-top">
+                  <div>
+                    <div class="activity-date">
+                      ${escapeHtml(
+                        CONFIG.utils.formatDate(
+                          report.activity_date,
+                          { weekday: "short" }
+                        )
+                      )}
+                    </div>
+                    <h3 class="activity-title">
+                      ${escapeHtml(report.activity_title)}
+                    </h3>
+                  </div>
+                  <span class="status-pill tone-success">
+                    ${escapeHtml(
+                      participationLabel(
+                        report.participation_status
+                      )
+                    )}
+                  </span>
+                </div>
+
+                <div class="domain-tags">
+                  ${(report.support_domains || [])
+                    .map(
+                      (domain) => `
+                        <span class="domain-tag">
+                          ${escapeHtml(
+                            CONFIG.utils.getLabel(
+                              CONFIG.SUPPORT_DOMAINS,
+                              domain,
+                              domain
+                            )
+                          )}
+                        </span>
+                      `
+                    )
+                    .join("")}
+                </div>
+
+                <p class="activity-report">
+                  ${escapeHtml(
+                    report.guardian_report ||
+                    "共有内容はありません。"
+                  )}
+                </p>
+              </article>
+            `)
+            .join("");
+      }
+
+      function renderAnnouncements() {
+        if (!state.announcements.length) {
+          els.announcementsList.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">知</div>
+              <h3>現在のお知らせはありません</h3>
+              <p>施設からのお知らせがある場合はこちらに表示します。</p>
+            </div>
+          `;
+          return;
+        }
+
+        els.announcementsList.innerHTML =
+          state.announcements
+            .slice(0, 10)
+            .map(
+              (announcement) => `
+                <article class="announcement ${
+                  announcement.is_pinned
+                    ? "pinned"
+                    : ""
+                }">
+                  <div class="card-top">
+                    <h3>${escapeHtml(announcement.title)}</h3>
+                    ${
+                      announcement.is_pinned
+                        ? '<span class="status-pill tone-blue">重要</span>'
+                        : ""
+                    }
+                  </div>
+                  <p>${escapeHtml(announcement.body)}</p>
+                  <time>${escapeHtml(
+                    CONFIG.utils.formatDateTime(
+                      announcement.publish_from ||
+                      announcement.created_at
+                    )
+                  )}</time>
+                </article>
+              `
+            )
+            .join("");
+      }
+
+      async function loadProfile() {
+        if (!identityReady()) {
+          renderRegistrationRequired();
+          return false;
+        }
+
+        const data =
+          await CONFIG.API.memberProfile({});
+
+        state.facility =
+          data?.facility || null;
+        state.guardian =
+          data?.guardian || null;
+        state.children =
+          Array.isArray(data?.children)
+            ? data.children
+            : [];
+        state.announcements =
+          Array.isArray(data?.announcements)
+            ? data.announcements
+            : [];
+
+        if (
+          !state.guardian ||
+          state.children.length === 0
+        ) {
+          throw new Error(
+            "保護者・児童情報を確認できませんでした。"
+          );
+        }
+
+        updateFacilityUi();
+        renderMember();
+        return true;
+      }
+
+      async function loadSelectedChildData(force) {
+        const child = selectedChild();
+
+        if (!child) {
+          return;
+        }
+
+        const cached =
+          state.childCache.get(child.id);
+
+        if (cached && !force) {
+          renderSelectedChildData();
+          return;
+        }
+
+        showLoading(
+          `${child.full_name}さんの情報を確認しています`,
+          "利用予定と活動報告を読み込んでいます。"
+        );
+
+        try {
+          const today =
+            CONFIG.utils.todayJst();
+
+          const [
+            scheduleResult,
+            activityResult,
+          ] = await Promise.all([
+            CONFIG.API.memberSchedules({
+              child_id: child.id,
+              from_date: addDays(today, -30),
+              to_date: addDays(today, 90),
+            }),
+            CONFIG.API.memberActivityReports({
+              child_id: child.id,
+            }),
+          ]);
+
+          state.childCache.set(child.id, {
+            schedules:
+              Array.isArray(
+                scheduleResult?.schedules
+              )
+                ? scheduleResult.schedules
+                : [],
+            activityReports:
+              Array.isArray(
+                activityResult?.activity_reports
+              )
+                ? activityResult.activity_reports
+                : [],
+          });
+
+          renderSelectedChildData();
+        } finally {
+          hideLoading();
+        }
+      }
+
+      async function refreshAll() {
+        state.childCache.clear();
+
+        showLoading(
+          "最新情報へ更新しています",
+          "保護者情報と施設からの共有内容を確認しています。"
+        );
+
+        try {
+          const loaded =
+            await loadProfile();
+
+          hideLoading();
+
+          if (loaded) {
+            await loadSelectedChildData(true);
+            showToast(
+              "最新情報へ更新しました。"
+            );
+          }
+        } finally {
+          hideLoading();
+        }
+      }
+
+      function showSystemError(error) {
+        els.systemErrorSection.hidden = false;
+        els.systemErrorMessage.textContent =
+          errorMessage(error);
+        setConnection("error", "接続不可");
+      }
+
+      function bindEvents() {
+        els.refreshButton.addEventListener(
+          "click",
+          async () => {
+            els.refreshButton.disabled = true;
+
+            try {
+              await refreshAll();
+            } catch (error) {
+              showToast(
+                errorMessage(error),
+                "error"
+              );
+            } finally {
+              els.refreshButton.disabled = false;
+            }
+          }
+        );
+
+        els.upcomingFilterButton.addEventListener(
+          "click",
+          () => {
+            state.scheduleFilter = "upcoming";
+            renderSchedules(
+              selectedChildData().schedules || []
+            );
+          }
+        );
+
+        els.recentFilterButton.addEventListener(
+          "click",
+          () => {
+            state.scheduleFilter = "recent";
+            renderSchedules(
+              selectedChildData().schedules || []
+            );
+          }
+        );
+      }
+
+      async function start() {
+        try {
+          configRequired();
+          captureIdentityFromUrl();
+          configureLinks();
+          bindEvents();
+
+          showLoading(
+            "マイページを確認しています",
+            "保護者・児童情報を読み込んでいます。"
+          );
+
+          try {
+            const loaded =
+              await loadProfile();
+
+            hideLoading();
+
+            if (loaded) {
+              await loadSelectedChildData(false);
+              setConnection("online", "接続済み");
+            } else {
+              setConnection("online", "未登録");
+            }
+          } catch (error) {
+            hideLoading();
+
+            if (
+              error?.code ===
+              "guardian_not_linked"
+            ) {
+              renderRegistrationRequired();
+              setConnection("online", "未登録");
+              return;
+            }
+
+            throw error;
+          }
+        } catch (error) {
+          hideLoading();
+          showSystemError(error);
+          showToast(
+            errorMessage(error),
+            "error"
+          );
+        }
+      }
+
+      start();
+    })();
+  </script>
+</body>
+</html>
