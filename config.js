@@ -3,7 +3,7 @@
  * DPRO 放課後等デイサービス LINE
  * STEP HOUKAGO-4
  * 共通設定 config.js 完全版
- * Version: HOUKAGO-4-R4-CONFIG-WORKER-VERSION-20260717
+ * Version: HOUKAGO-4-R5-CONFIG-OWNER-MASTER-DATA-20260717
  * ============================================================
  *
  * GitHub配置先:
@@ -27,8 +27,8 @@
     serviceName: "DPRO 放課後等デイサービス LINE",
     shortName: "DPRO放課後等デイ",
     subtitle: "保護者連絡・利用予定・送迎・日々の支援共有をLINEで一元管理",
-    appVersion: "HOUKAGO-4-R4-CONFIG-WORKER-VERSION-20260717",
-    workerVersion: "HOUKAGO-3-R4-WORKER-DEMO-RESET-REBUILD-20260717",
+    appVersion: "HOUKAGO-4-R5-CONFIG-OWNER-MASTER-DATA-20260717",
+    workerVersion: "HOUKAGO-3-R5-WORKER-OWNER-MASTER-DATA-20260717",
     facilityCode: "dpro_houkago_demo",
     facilityName: "DPRO放課後等デイサービス",
     corporationName: "DPRO福祉サポート",
@@ -79,6 +79,7 @@
     memberActivityReports: "/api/member/activity-reports",
 
     adminAuth: "/api/admin/auth",
+    adminMasterData: "/api/admin/master-data",
     adminDashboard: "/api/admin/dashboard",
     adminDay: "/api/admin/day",
     adminSearch: "/api/admin/search",
@@ -1499,6 +1500,12 @@
       return apiRequest(ENDPOINTS.adminAuth, {
         method: "POST",
         body: {},
+        admin: true,
+      });
+    },
+
+    adminMasterData() {
+      return apiRequest(ENDPOINTS.adminMasterData, {
         admin: true,
       });
     },
