@@ -1304,7 +1304,7 @@
 
     <footer class="footer">
       <div id="footerFacilityName">DPRO放課後等デイサービス</div>
-      <div>HOUKAGO-6-GUARDIAN-CONTACT-COMPLETE-20260717</div>
+      <div>HOUKAGO-6-R1-GUARDIAN-RECEIPT-DISPLAY-FIX-20260717</div>
     </footer>
   </main>
 
@@ -1333,7 +1333,7 @@
       <div class="complete-icon">✓</div>
       <h2>施設への連絡を受け付けました</h2>
       <p>
-        施設で内容を確認します。緊急の場合は電話でもご連絡ください。
+        施設で内容を確認します。緊急の場合や送迎直前の変更は、電話でもご連絡ください。
       </p>
       <div class="complete-reference" id="completeReference">
         受付情報を確認中
@@ -1359,7 +1359,7 @@
       "use strict";
 
       const PAGE_VERSION =
-        "HOUKAGO-6-GUARDIAN-CONTACT-COMPLETE-20260717";
+        "HOUKAGO-6-R1-GUARDIAN-RECEIPT-DISPLAY-FIX-20260717";
 
       const CONFIG =
         window.DPRO_HOUKAGO_CONFIG ||
@@ -2488,11 +2488,18 @@
               payload
             );
 
-          const requestId =
-            data?.request?.id || "受付済み";
+          const acceptedAt =
+            CONFIG.utils.formatDateTime(
+              data?.request?.created_at ||
+              new Date().toISOString()
+            );
 
           els.completeReference.textContent =
-            `受付：${state.pendingPayload._display.typeLabel}／${state.pendingPayload._display.childName}さん／${requestId}`;
+            [
+              `連絡内容：${state.pendingPayload._display.typeLabel}`,
+              `児童：${state.pendingPayload._display.childName}さん`,
+              `受付日時：${acceptedAt}`,
+            ].join("／");
 
           if (els.confirmDialog.open) {
             els.confirmDialog.close();
