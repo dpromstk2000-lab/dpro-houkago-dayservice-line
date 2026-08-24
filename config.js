@@ -3,7 +3,7 @@
  * DPRO 放課後等デイサービス LINE
  * STEP HOUKAGO-4
  * 共通設定 config.js 完全版
- * Version: HOUKAGO-4-R7-FINAL-INTEGRATION-20260717
+ * Version: HOUKAGO-4-R2-PRODUCT-READY-20260824
  * ============================================================
  *
  * GitHub配置先:
@@ -27,7 +27,10 @@
     serviceName: "DPRO 放課後等デイサービス LINE",
     shortName: "DPRO放課後等デイ",
     subtitle: "保護者連絡・利用予定・送迎・日々の支援共有をLINEで一元管理",
-    appVersion: "HOUKAGO-4-R7-FINAL-INTEGRATION-20260717",
+    appVersion: "HOUKAGO-4-R2-PRODUCT-READY-20260824",
+    adapterVersion: "DPRO-CONTROL-ADAPTER-1.0-HOUKAGO-R2-20260824",
+    databaseVersion: "HOUKAGO-DB-PRODUCT-READY-R2-20260824",
+    staffAuthorityVersion: "HOUKAGO-STAFF-AUTHORITY-R2-20260824",
     workerVersion: "HOUKAGO-3-R7-WORKER-PAST-DATE-GUARD-FINAL-20260717",
     facilityCode: "dpro_houkago_demo",
     facilityName: "DPRO放課後等デイサービス",
@@ -45,6 +48,12 @@
       "https://dpromstk2000-lab.github.io/dpro-houkago-dayservice-line",
     workerBase:
       "https://dpro-houkago-dayservice-line-api.dpromstk2000.workers.dev",
+    apiBase:
+      "https://cbknucemarcpbscirzyv.supabase.co/functions/v1/houkago-product-ready-adapter",
+    adapterBase:
+      "https://cbknucemarcpbscirzyv.supabase.co/functions/v1/houkago-product-ready-adapter",
+    staffAuthorityBase:
+      "https://cbknucemarcpbscirzyv.supabase.co/functions/v1/houkago-staff-authority",
     repository:
       "https://github.com/dpromstk2000-lab/dpro-houkago-dayservice-line",
 
@@ -121,6 +130,17 @@
     adminIntegrationCheck:
       "/api/admin/integration-check",
     adminSystemCheck: "/api/admin/system-check",
+
+    productReadyCheck: "/api/product-ready/check",
+    productReadySelfTest: "/api/product-ready/self-test",
+    r2PhotoUploadSign: "/api/r2/photos/upload-sign",
+    r2PhotoCommit: "/api/r2/photos/commit",
+    r2PhotoReadSign: "/api/r2/photos/read-sign",
+
+    staffHealth: "/health",
+    staffSession: "/session",
+    staffSessionCheck: "/check",
+    staffSessionRevoke: "/revoke",
   });
 
   const STORAGE_KEYS = Object.freeze({
@@ -131,6 +151,10 @@
     selectedChildId: "dpro_houkago_selected_child_id",
     selectedTransportRunId:
       "dpro_houkago_selected_transport_run_id",
+
+    staffSession: "dpro_houkago_staff_session",
+    staffSessionExpiresAt: "dpro_houkago_staff_session_expires_at",
+    staffCode: "dpro_houkago_staff_code",
 
     guardianPhone: "dpro_houkago_guardian_phone",
     childNumber: "dpro_houkago_child_number",
@@ -220,6 +244,12 @@
     ownerPc: true,
     ownerIpad: true,
     privateChildPhotoStorage: true,
+    signedPhotoUpload: true,
+    individualStaffAuth: true,
+    roleCapabilities: true,
+    serverStaffAudit: true,
+    businessCalendar: true,
+    thirtyMinuteSlots: true,
     operationLogs: true,
     demoPrepare: true,
     integrationCheck: true,
@@ -1148,12 +1178,16 @@
     return formatDateShort(value, false);
   }
 
-  function endpointUrl(endpoint, query = null) {
+  function endpointUrl(
+    endpoint,
+    query = null,
+    baseUrl = URLS.apiBase || URLS.workerBase
+  ) {
     const path = String(endpoint || "").startsWith("/")
       ? endpoint
       : `/${endpoint}`;
 
-    const url = new URL(`${URLS.workerBase}${path}`);
+    const url = new URL(`${baseUrl}${path}`);
 
     if (query && typeof query === "object") {
       Object.entries(query).forEach(([key, value]) => {
@@ -1312,6 +1346,48 @@
     };
   }
 
+  function staffSession() {
+    const token = storageGet(STORAGE_KEYS.staffSession, "");
+    const expiresAt = storageGet(
+      STORAGE_KEYS.staffSessionExpiresAt,
+      ""
+    );
+
+    if (
+      token &&
+      expiresAt &&
+      new Date(expiresAt).getTime() <= Date.now()
+    ) {
+      storageRemove(STORAGE_KEYS.staffSession);
+      storageRemove(STORAGE_KEYS.staffSessionExpiresAt);
+      return "";
+    }
+
+    return token || "";
+  }
+
+  function saveStaffSession(data) {
+    if (!data?.session) return;
+    storageSet(STORAGE_KEYS.staffSession, data.session);
+    storageSet(
+      STORAGE_KEYS.staffSessionExpiresAt,
+      data.expires_at || ""
+    );
+    storageSet(
+      STORAGE_KEYS.staffCode,
+      data?.staff?.staff_code || ""
+    );
+    storageSet(
+      STORAGE_KEYS.operatorName,
+      data?.staff?.full_name || ""
+    );
+  }
+
+  function clearStaffSession() {
+    storageRemove(STORAGE_KEYS.staffSession);
+    storageRemove(STORAGE_KEYS.staffSessionExpiresAt);
+  }
+
   async function apiRequest(
     endpoint,
     {
@@ -1319,7 +1395,9 @@
       query = null,
       body = undefined,
       admin = false,
+      staff = false,
       line = false,
+      baseUrl = URLS.apiBase || URLS.workerBase,
       headers = {},
       timeoutMs = 20000,
     } = {}
@@ -1337,16 +1415,32 @@
       requestBody = JSON.stringify(body);
     }
 
-    if (admin) {
-      const code = adminCode();
-      if (!code) {
+    if (staff) {
+      const session = staffSession();
+      if (!session) {
         throw createClientError(
-          "admin_code_required",
-          "管理コードを入力してください。",
+          "staff_session_required",
+          "スタッフ個人認証が必要です。",
           401
         );
       }
-      requestHeaders.set("X-Admin-Code", code);
+      requestHeaders.set("X-Staff-Session", session);
+    } else if (admin) {
+      const session = staffSession();
+
+      if (session) {
+        requestHeaders.set("X-Staff-Session", session);
+      } else {
+        const code = adminCode();
+        if (!code) {
+          throw createClientError(
+            "admin_code_required",
+            "管理コードを入力してください。",
+            401
+          );
+        }
+        requestHeaders.set("X-Admin-Code", code);
+      }
     }
 
     if (line) {
@@ -1372,7 +1466,7 @@
     );
 
     try {
-      const response = await fetch(endpointUrl(endpoint, query), {
+      const response = await fetch(endpointUrl(endpoint, query, baseUrl), {
         method,
         headers: requestHeaders,
         body: requestBody,
@@ -1431,6 +1525,94 @@
     error.status = status;
     error.details = details;
     return error;
+  }
+
+
+  function dataUrlToBlob(dataUrl) {
+    const match = String(dataUrl || "").match(
+      /^data:([^;,]+);base64,(.+)$/
+    );
+
+    if (!match) {
+      throw createClientError(
+        "invalid_photo_data",
+        "写真データを確認できませんでした。",
+        400
+      );
+    }
+
+    const binary = atob(match[2]);
+    const bytes = new Uint8Array(binary.length);
+
+    for (let index = 0; index < binary.length; index += 1) {
+      bytes[index] = binary.charCodeAt(index);
+    }
+
+    return new Blob([bytes], { type: match[1] });
+  }
+
+  async function signedPhotoUpload(payload) {
+    const session = staffSession();
+
+    if (!session) {
+      throw createClientError(
+        "staff_session_required",
+        "写真保存にはスタッフ個人認証が必要です。",
+        401
+      );
+    }
+
+    const blob = dataUrlToBlob(payload?.image_data);
+
+    if (blob.size > VALIDATION.maxUploadBytes) {
+      throw createClientError(
+        "photo_too_large",
+        "写真サイズが上限を超えています。",
+        413
+      );
+    }
+
+    const signed = await apiRequest(
+      ENDPOINTS.r2PhotoUploadSign,
+      {
+        method: "POST",
+        body: {
+          child_id: payload?.child_id,
+          content_type: blob.type || "image/jpeg",
+        },
+        staff: true,
+      }
+    );
+
+    const formData = new FormData();
+    formData.append("cacheControl", "3600");
+    formData.append("", blob);
+
+    const uploadResponse = await fetch(
+      signed.upload_url,
+      {
+        method: "PUT",
+        headers: { "x-upsert": "false" },
+        body: formData,
+      }
+    );
+
+    if (!uploadResponse.ok) {
+      throw createClientError(
+        "signed_photo_upload_failed",
+        `写真のアップロードに失敗しました。（${uploadResponse.status}）`,
+        uploadResponse.status
+      );
+    }
+
+    return apiRequest(ENDPOINTS.r2PhotoCommit, {
+      method: "POST",
+      body: {
+        child_id: payload?.child_id,
+        path: signed.path,
+      },
+      staff: true,
+    });
   }
 
   const API = Object.freeze({
@@ -1499,10 +1681,21 @@
     },
 
     adminAuth() {
+      const code = adminCode();
+      if (!code) {
+        return Promise.reject(
+          createClientError(
+            "admin_code_required",
+            "管理コードを入力してください。",
+            401
+          )
+        );
+      }
+
       return apiRequest(ENDPOINTS.adminAuth, {
         method: "POST",
         body: {},
-        admin: true,
+        headers: { "X-Admin-Code": code },
       });
     },
 
@@ -1691,14 +1884,7 @@
     },
 
     adminChildPhotoUpload(payload) {
-      return apiRequest(
-        ENDPOINTS.adminChildPhotoUpload,
-        {
-          method: "POST",
-          body: payload,
-          admin: true,
-        }
-      );
+      return signedPhotoUpload(payload);
     },
 
     adminChildPhotoSignedUrl(
@@ -1748,6 +1934,61 @@
         admin: true,
       });
     },
+
+    productReadyCheck() {
+      return apiRequest(ENDPOINTS.productReadyCheck);
+    },
+
+    productReadySelfTest() {
+      return apiRequest(ENDPOINTS.productReadySelfTest, {
+        method: "POST",
+        body: {},
+        admin: true,
+      });
+    },
+
+    staffHealth() {
+      return apiRequest(ENDPOINTS.staffHealth, {
+        baseUrl: URLS.staffAuthorityBase,
+      });
+    },
+
+    async staffSessionCreate(payload) {
+      const data = await apiRequest(ENDPOINTS.staffSession, {
+        method: "POST",
+        body: payload,
+        baseUrl: URLS.staffAuthorityBase,
+      });
+      saveStaffSession(data);
+      return data;
+    },
+
+    async staffSessionCheck() {
+      const data = await apiRequest(ENDPOINTS.staffSessionCheck, {
+        staff: true,
+        baseUrl: URLS.staffAuthorityBase,
+      });
+      return data;
+    },
+
+    async staffSessionRevoke() {
+      try {
+        return await apiRequest(
+          ENDPOINTS.staffSessionRevoke,
+          {
+            method: "POST",
+            body: {},
+            staff: true,
+            baseUrl: URLS.staffAuthorityBase,
+          }
+        );
+      } finally {
+        clearStaffSession();
+      }
+    },
+
+    clearStaffSession,
+    currentStaffSession: staffSession,
   });
 
   const Config = deepFreeze({

@@ -965,7 +965,7 @@
     }
   </style>
 
-  <script src="./config.js?v=HOUKAGO-4-R7-FINAL-INTEGRATION-20260717"></script>
+  <script src="./config.js?v=HOUKAGO-4-R2-PRODUCT-READY-20260824"></script>
 </head>
 
 <body>
@@ -1400,7 +1400,7 @@
       "use strict";
 
       const SCREEN_VERSION =
-        "HOUKAGO-11-FINAL-INTEGRATION-CHECK-20260717";
+        "HOUKAGO-11-R2-PRODUCT-READY-CHECK-20260824";
       const CONFIG =
         window.DPRO_HOUKAGO_CONFIG ||
         window.DPRO_HOUKAGO ||
@@ -1920,26 +1920,35 @@
 
         const configOk =
           CONFIG.APP.appVersion ===
-            "HOUKAGO-4-R7-FINAL-INTEGRATION-20260717" &&
+            "HOUKAGO-4-R2-PRODUCT-READY-20260824" &&
+          CONFIG.APP.adapterVersion ===
+            "DPRO-CONTROL-ADAPTER-1.0-HOUKAGO-R2-20260824" &&
+          CONFIG.APP.databaseVersion ===
+            "HOUKAGO-DB-PRODUCT-READY-R2-20260824" &&
+          CONFIG.APP.staffAuthorityVersion ===
+            "HOUKAGO-STAFF-AUTHORITY-R2-20260824" &&
           CONFIG.APP.workerVersion ===
             "HOUKAGO-3-R7-WORKER-PAST-DATE-GUARD-FINAL-20260717" &&
-          CONFIG.URLS.workerBase.includes(
-            "dpro-houkago-dayservice-line-api"
+          CONFIG.URLS.apiBase.includes(
+            "houkago-product-ready-adapter"
           );
 
         setCheckResult(
           "config",
           configOk ? "ok" : "warning",
           [
-            `app: ${CONFIG.APP.appVersion}`,
-            `worker: ${CONFIG.APP.workerVersion}`,
-            `API: ${CONFIG.URLS.workerBase}`,
+            `frontend: ${CONFIG.APP.appVersion}`,
+            `adapter: ${CONFIG.APP.adapterVersion}`,
+            `database: ${CONFIG.APP.databaseVersion}`,
+            `legacy worker: ${CONFIG.APP.workerVersion}`,
+            `staff authority: ${CONFIG.APP.staffAuthorityVersion}`,
+            `API: ${CONFIG.URLS.apiBase}`,
           ].join("\n")
         );
       }
 
       async function runHealthCheck() {
-        setCheckResult("health", "running", "Workerへ接続中");
+        setCheckResult("health", "running", "R2安全ゲートウェイへ接続中");
 
         try {
           const data = await CONFIG.API.health();
@@ -1950,14 +1959,25 @@
             data?.ok === true &&
             data?.database?.ok === true &&
             data?.database?.facility_code ===
-              CONFIG.APP.facilityCode;
+              CONFIG.APP.facilityCode &&
+            data?.adapter_version ===
+              CONFIG.APP.adapterVersion &&
+            data?.database_version ===
+              CONFIG.APP.databaseVersion &&
+            data?.staff_authority_version ===
+              CONFIG.APP.staffAuthorityVersion &&
+            data?.legacy_worker_version ===
+              CONFIG.APP.workerVersion;
 
           setCheckResult(
             "health",
             ok ? "ok" : "warning",
             [
               `service: ${data?.service || "未取得"}`,
-              `version: ${data?.version || "未取得"}`,
+              `adapter: ${data?.adapter_version || "未取得"}`,
+              `database: ${data?.database_version || "未取得"}`,
+              `legacy worker: ${data?.legacy_worker_version || "未取得"}`,
+              `staff authority: ${data?.staff_authority_version || "未取得"}`,
               `facility: ${data?.database?.facility_code || "未取得"}`,
               `DB: ${data?.database?.ok === true ? "OK" : "要確認"}`,
             ].join("\n")
@@ -2051,82 +2071,99 @@
       async function runIntegrationCheck() {
         ["tables", "phone", "domains", "bucket"].forEach(
           (key) =>
-            setCheckResult(key, "running", "統合検査を実行中")
+            setCheckResult(key, "running", "R2統合検査を実行中")
         );
 
         try {
           requireAdminCode();
           const data =
-            await CONFIG.API.adminIntegrationCheck();
+            await CONFIG.API.productReadyCheck();
 
           state.integrationData = data;
           state.rawData.integrationCheck = data;
 
-          const tables = data?.checks?.tables || {};
-          const tableEntries = Object.entries(tables);
-          const tableOkCount = tableEntries.filter(
-            ([, value]) => value?.ok === true
-          ).length;
+          const security =
+            data?.database?.security || {};
+          const checks =
+            data?.checks || {};
 
           const tablesOk =
-            tableEntries.length === 29 &&
-            tableOkCount === 29;
+            security?.base_rls_count === 29 &&
+            security?.r2_rls_count === 4 &&
+            security?.policy_count === 0 &&
+            security?.half_hour_trigger === true;
 
           setCheckResult(
             "tables",
             tablesOk ? "ok" : "error",
             [
-              `検査テーブル: ${tableEntries.length}件`,
-              `正常: ${tableOkCount}件`,
-              `異常: ${tableEntries.length - tableOkCount}件`,
+              `既存29テーブル RLS: ${Number(security?.base_rls_count || 0)}/29`,
+              `R2 security tables RLS: ${Number(security?.r2_rls_count || 0)}/4`,
+              `public policy: ${Number(security?.policy_count || 0)}件`,
+              `30分DB guard: ${security?.half_hour_trigger === true ? "OK" : "要確認"}`,
             ].join("\n")
           );
 
-          const phone =
-            data?.checks?.phone_normalization;
           setCheckResult(
             "phone",
-            phone?.ok === true ? "ok" : "error",
-            phone?.ok === true
-              ? `+81・全角を09011112202へ正規化\nresult: ${phone?.result}`
-              : errorMessage(phone)
+            checks?.phone_normalization === true
+              ? "ok"
+              : "error",
+            checks?.phone_normalization === true
+              ? "+81・0081・全角・区切り文字を同一電話番号へ正規化：OK"
+              : "電話番号正規化を確認できませんでした。"
           );
 
-          const domains =
-            data?.checks?.support_domains;
           const configDomainCount =
             Object.keys(CONFIG.SUPPORT_DOMAINS || {}).length;
+          const domainsOk =
+            configDomainCount === 5 &&
+            checks?.database_contract === true;
 
           setCheckResult(
             "domains",
-            domains?.ok === true &&
-              configDomainCount === 5
-              ? "ok"
-              : "error",
+            domainsOk ? "ok" : "error",
             [
-              `DB関数: ${domains?.ok === true ? "OK" : "要確認"}`,
-              `config.js定義: ${configDomainCount}領域`,
+              `5領域 config定義: ${configDomainCount}領域`,
+              `DB contract: ${checks?.database_contract === true ? "OK" : "要確認"}`,
             ].join("\n")
           );
 
-          const bucket =
-            data?.checks?.private_photo_bucket;
-          const bucketData = bucket?.bucket || {};
+          const bucketData =
+            security?.private_photo_bucket || {};
+          const bucketOk =
+            checks?.private_photo_bucket === true &&
+            bucketData?.public === false;
 
           setCheckResult(
             "bucket",
-            bucket?.ok === true &&
-              bucketData?.public === false
-              ? "ok"
-              : "error",
+            bucketOk ? "ok" : "error",
             [
               `bucket: ${bucketData?.id || CONFIG.APP.privatePhotoBucket}`,
               `public: ${String(bucketData?.public)}`,
-              `private判定: ${bucket?.ok === true ? "OK" : "要確認"}`,
+              `最大: ${Number(bucketData?.file_size_limit || 0)} bytes`,
+              `private判定: ${bucketOk ? "OK" : "要確認"}`,
             ].join("\n")
           );
 
-          renderTableList(tables);
+          renderTableList({
+            "既存業務テーブル RLS": {
+              ok: security?.base_rls_count === 29,
+              count: security?.base_rls_count || 0,
+            },
+            "R2認証・bindingテーブル RLS": {
+              ok: security?.r2_rls_count === 4,
+              count: security?.r2_rls_count || 0,
+            },
+            "公開RLSポリシー": {
+              ok: security?.policy_count === 0,
+              count: security?.policy_count || 0,
+            },
+            "30分単位DBガード": {
+              ok: security?.half_hour_trigger === true,
+              count: security?.half_hour_trigger === true ? 1 : 0,
+            },
+          });
         } catch (error) {
           ["tables", "phone", "domains", "bucket"].forEach(
             (key) =>

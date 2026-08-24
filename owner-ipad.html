@@ -971,7 +971,7 @@
     }
   </style>
 
-  <script src="./config.js?v=HOUKAGO-4-R7-FINAL-INTEGRATION-20260717"></script>
+  <script src="./config.js?v=HOUKAGO-4-R2-PRODUCT-READY-20260824"></script>
 </head>
 
 <body>
@@ -985,25 +985,31 @@
         </div>
       </div>
 
-      <h2 class="auth-title">管理コード認証</h2>
+      <h2 class="auth-title">スタッフ個人認証</h2>
       <p class="auth-copy">
-        管理コードが正しい場合だけ、児童情報・送迎・活動記録を表示します。
+        スタッフコードと個人PINで本人を確認し、権限に応じた操作だけを許可します。
+        認証セッションはサーバー側で管理され、30分で期限切れになります。
       </p>
 
       <form id="authForm" novalidate>
         <div class="field">
-          <label for="authCode">管理コード</label>
-          <input class="input" id="authCode" type="password" inputmode="numeric" autocomplete="off" maxlength="100" placeholder="管理コードを入力">
+          <label for="authStaffCode">スタッフコード</label>
+          <input class="input" id="authStaffCode" type="text" autocomplete="username" maxlength="50" placeholder="例：HOU-STAFF-003">
+        </div>
+
+        <div class="field" style="margin-top:12px;">
+          <label for="authPin">個人PIN</label>
+          <input class="input" id="authPin" type="password" inputmode="numeric" autocomplete="current-password" maxlength="20" placeholder="個人PINを入力">
         </div>
 
         <div class="button-row">
-          <button class="btn btn-primary" id="authButton" type="submit">認証して開く</button>
-          <button class="btn btn-danger" id="clearAuthButton" type="button">保存済みコードを削除</button>
+          <button class="btn btn-primary" id="authButton" type="submit">個人認証して開く</button>
+          <button class="btn btn-danger" id="clearAuthButton" type="button">この端末の認証を解除</button>
         </div>
       </form>
 
       <div class="notice notice-info" style="margin-top:16px;">
-        デモURLでは1234を自動入力しますが、Worker APIの認証成功後にのみ画面を開きます。
+        デモURLでは検証用スタッフを自動入力します。本番では契約時にスタッフごとの認証情報を設定します。
       </div>
       <div class="notice notice-danger" id="authError" style="margin-top:10px;" hidden></div>
     </div>
@@ -1026,7 +1032,7 @@
         <button class="btn btn-secondary btn-small" id="nextDateButton" type="button">翌日</button>
       </div>
 
-      <select class="select operator-select" id="staffSelect" aria-label="操作スタッフ"></select>
+      <select class="select operator-select" id="staffSelect" aria-label="認証済みスタッフ" disabled></select>
     </header>
 
     <main class="main">
@@ -1277,7 +1283,7 @@
       "use strict";
 
       const PAGE_VERSION =
-        "HOUKAGO-9-STAFF-IPAD-COMPLETE-20260717";
+        "HOUKAGO-9-R2-INDIVIDUAL-STAFF-AUTH-20260824";
 
       const CONFIG =
         window.DPRO_HOUKAGO_CONFIG ||
@@ -1286,6 +1292,8 @@
 
       const state = {
         authenticated: false,
+        sessionStaff: null,
+        sessionCapabilities: [],
         currentTab: "children",
         selectedDate: null,
         facility: null,
@@ -1310,7 +1318,8 @@
       const els = {
         authPage: $("#authPage"),
         authForm: $("#authForm"),
-        authCode: $("#authCode"),
+        authStaffCode: $("#authStaffCode"),
+        authPin: $("#authPin"),
         authButton: $("#authButton"),
         clearAuthButton: $("#clearAuthButton"),
         authError: $("#authError"),
@@ -1443,6 +1452,10 @@
       }
 
       function selectedStaff() {
+        if (state.sessionStaff) {
+          return state.sessionStaff;
+        }
+
         return (
           state.masters.staff.find(
             (staff) =>
@@ -1546,45 +1559,43 @@
         return state.day?.children || [];
       }
 
-      async function authenticate(code) {
-        const candidate = String(code || "").trim();
+      async function authenticate(staffCode, pin) {
+        const code = String(staffCode || "").trim();
+        const credential = String(pin || "").trim();
 
-        if (!candidate) {
+        if (!code || !credential) {
           throw new Error(
-            "管理コードを入力してください。"
+            "スタッフコードと個人PINを入力してください。"
           );
         }
 
-        CONFIG.storage.set(
-          CONFIG.STORAGE_KEYS.adminCode,
-          candidate
-        );
+        const data =
+          await CONFIG.API.staffSessionCreate({
+            staff_code: code,
+            pin: credential,
+            device_type: "owner_ipad",
+          });
 
-        try {
-          const data =
-            await CONFIG.API.adminAuth();
-
-          if (
-            data?.ok !== true ||
-            data?.authenticated !== true
-          ) {
-            throw new Error(
-              "管理コードを確認できませんでした。"
-            );
-          }
-
-          state.authenticated = true;
-          state.facility = data.facility || null;
-          els.authPage.hidden = true;
-          els.ipadApp.hidden = false;
-          updateFacilityName();
-        } catch (error) {
-          CONFIG.storage.remove(
-            CONFIG.STORAGE_KEYS.adminCode
+        if (
+          data?.ok !== true ||
+          !data?.session ||
+          !data?.staff
+        ) {
+          throw new Error(
+            "スタッフ個人認証を確認できませんでした。"
           );
-          state.authenticated = false;
-          throw error;
         }
+
+        state.authenticated = true;
+        state.sessionStaff = data.staff;
+        state.sessionCapabilities =
+          data.capabilities || [];
+        state.facility = data.facility || null;
+
+        els.authPin.value = "";
+        els.authPage.hidden = true;
+        els.ipadApp.hidden = false;
+        updateFacilityName();
       }
 
       function updateFacilityName() {
@@ -1593,38 +1604,67 @@
           CONFIG.APP.facilityName;
       }
 
-      async function initializeAuthentication() {
-        if (CONFIG.utils.isDemoMode()) {
-          CONFIG.utils.ensureDemoAdminCode();
-        }
-
-        const code = getAdminCode();
-        els.authCode.value = code;
-
-        if (!code) {
-          els.authPage.hidden = false;
-          els.ipadApp.hidden = true;
+      async function restoreStaffSession() {
+        if (!CONFIG.API.currentStaffSession()) {
           return false;
         }
-
-        showLoading(
-          "管理コードを確認しています",
-          "スタッフiPad画面を準備しています。"
-        );
 
         try {
-          await authenticate(code);
+          const data =
+            await CONFIG.API.staffSessionCheck();
+
+          if (
+            data?.ok !== true ||
+            !data?.staff
+          ) {
+            return false;
+          }
+
+          state.authenticated = true;
+          state.sessionStaff = data.staff;
+          state.sessionCapabilities =
+            data.capabilities || [];
+          state.facility = data.facility || null;
+
+          els.authStaffCode.value =
+            data.staff.staff_code || "";
+          els.authPage.hidden = true;
+          els.ipadApp.hidden = false;
+          updateFacilityName();
           return true;
-        } catch (error) {
-          els.authPage.hidden = false;
-          els.ipadApp.hidden = true;
-          els.authError.hidden = false;
-          els.authError.textContent =
-            errorMessage(error);
+        } catch {
+          CONFIG.API.clearStaffSession();
           return false;
-        } finally {
-          hideLoading();
         }
+      }
+
+      async function initializeAuthentication() {
+        const restored =
+          await restoreStaffSession();
+
+        if (restored) {
+          return true;
+        }
+
+        const savedStaffCode =
+          CONFIG.storage.get(
+            CONFIG.STORAGE_KEYS.staffCode,
+            ""
+          );
+
+        els.authStaffCode.value =
+          savedStaffCode ||
+          (CONFIG.utils.isDemoMode()
+            ? "HOU-STAFF-003"
+            : "");
+
+        if (CONFIG.utils.isDemoMode()) {
+          els.authPin.value = "1103";
+        }
+
+        els.authPage.hidden = false;
+        els.ipadApp.hidden = true;
+        return false;
       }
 
       async function loadMasters() {
@@ -1646,58 +1686,36 @@
       }
 
       function populateStaffOptions() {
-        const savedStaffId =
-          CONFIG.storage.get(
-            "dpro_houkago_ipad_staff_id",
-            ""
-          );
+        const staff = state.sessionStaff;
 
-        els.staffSelect.innerHTML = [
-          '<option value="">操作スタッフを選択</option>',
-          ...state.masters.staff.map(
-            (staff) => `
-              <option value="${escapeHtml(staff.id)}">
-                ${escapeHtml(staff.full_name)}
-                （${escapeHtml(
-                  labelOf(
-                    CONFIG.STAFF_ROLES,
-                    staff.role,
-                    staff.role
-                  )
-                )}）
-              </option>
-            `
-          ),
-        ].join("");
-
-        if (
-          state.masters.staff.some(
-            (staff) =>
-              staff.id === savedStaffId
-          )
-        ) {
-          els.staffSelect.value = savedStaffId;
-        } else if (state.masters.staff[0]) {
-          els.staffSelect.value =
-            state.masters.staff[0].id;
+        if (!staff) {
+          els.staffSelect.innerHTML =
+            '<option value="">個人認証が必要です</option>';
+          return;
         }
 
-        saveStaffSelection();
-      }
+        els.staffSelect.innerHTML = `
+          <option value="${escapeHtml(staff.id)}">
+            ${escapeHtml(staff.full_name)}
+            （${escapeHtml(
+              labelOf(
+                CONFIG.STAFF_ROLES,
+                staff.role,
+                staff.role
+              )
+            )}）
+          </option>
+        `;
+        els.staffSelect.value = staff.id;
 
-      function saveStaffSelection() {
-        const staff = selectedStaff();
-
-        if (!staff) return;
-
-        CONFIG.storage.set(
-          "dpro_houkago_ipad_staff_id",
-          staff.id
-        );
         CONFIG.storage.set(
           CONFIG.STORAGE_KEYS.operatorName,
           staff.full_name
         );
+      }
+
+      function saveStaffSelection() {
+        populateStaffOptions();
       }
 
       async function loadDayData() {
@@ -3214,9 +3232,13 @@
 
             try {
               await authenticate(
-                els.authCode.value
+                els.authStaffCode.value,
+                els.authPin.value
               );
               await loadInitialData();
+              showToast(
+                `個人認証済み：${operatorName()}`
+              );
             } catch (error) {
               els.authPage.hidden = false;
               els.ipadApp.hidden = true;
@@ -3229,41 +3251,29 @@
           }
         );
 
-        els.authCode.addEventListener(
-          "input",
-          () => {
-            if (
-              els.authCode.value !==
-              getAdminCode()
-            ) {
-              CONFIG.storage.remove(
-                CONFIG.STORAGE_KEYS
-                  .adminCode
-              );
-            }
-          }
-        );
-
         els.clearAuthButton.addEventListener(
           "click",
-          () => {
-            CONFIG.storage.remove(
-              CONFIG.STORAGE_KEYS.adminCode
-            );
-            els.authCode.value = "";
-            els.authError.hidden = true;
-            showToast(
-              "保存済み管理コードを削除しました。"
-            );
-          }
-        );
+          async () => {
+            try {
+              if (
+                CONFIG.API.currentStaffSession()
+              ) {
+                await CONFIG.API
+                  .staffSessionRevoke();
+              }
+            } catch {
+              CONFIG.API.clearStaffSession();
+            }
 
-        els.staffSelect.addEventListener(
-          "change",
-          () => {
-            saveStaffSelection();
+            state.authenticated = false;
+            state.sessionStaff = null;
+            state.sessionCapabilities = [];
+            els.authPin.value = "";
+            els.authError.hidden = true;
+            els.authPage.hidden = false;
+            els.ipadApp.hidden = true;
             showToast(
-              `操作スタッフ：${operatorName()}`
+              "この端末のスタッフ認証を解除しました。"
             );
           }
         );
