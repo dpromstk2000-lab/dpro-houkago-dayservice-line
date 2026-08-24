@@ -1,0 +1,67 @@
+name: HOUKAGO R2 Cleanup Temporary QA Files
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/houkago-r2-cleanup-temp-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Verify R2 product files before cleanup
+        shell: bash
+        run: |
+          python <<'PY'
+          from pathlib import Path
+
+          checks = {
+              "config_r2": "HOUKAGO-4-R2-PRODUCT-READY-20260824" in Path("config.js").read_text(encoding="utf-8"),
+              "owner_ipad_r2": "HOUKAGO-9-R2-INDIVIDUAL-STAFF-AUTH-20260824" in Path("owner-ipad.html").read_text(encoding="utf-8"),
+              "system_check_r2": "HOUKAGO-11-R2-PRODUCT-READY-CHECK-20260824" in Path("system-check.html").read_text(encoding="utf-8"),
+          }
+          for key, ok in checks.items():
+              print(("PASS" if ok else "FAIL") + " - " + key)
+          if not all(checks.values()):
+              raise SystemExit("R2 product-file verification failed. Cleanup aborted.")
+          PY
+
+      - name: Remove temporary QA dependencies
+        shell: bash
+        run: |
+          if [ -d node_modules ]; then
+            git rm -r node_modules
+          else
+            echo "node_modules is already absent."
+          fi
+
+      - name: Self-remove cleanup workflow
+        shell: bash
+        run: |
+          git rm --ignore-unmatch .github/workflows/houkago-r2-cleanup-temp-qa.yml
+
+      - name: Commit cleanup
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No cleanup changes required."
+            exit 0
+          fi
+
+          git commit -m 'Cleanup temporary QA dependencies after HOUKAGO R2 final PASS'
+          git push origin main
