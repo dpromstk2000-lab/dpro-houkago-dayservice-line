@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>DPRO 放課後等デイサービス｜操作ガイド First10</title>
+<link rel="stylesheet" href="./tutorial.css">
+</head>
+<body>
+<div class="dt-shell">
+  <header class="dt-topbar">
+    <div class="dt-brand"><strong>DPRO 放課後等デイサービス｜操作ガイド</strong><span>STANDARD V1.1 / First10</span></div>
+    <div class="dt-top-actions">
+      <a class="dt-link" href="./guide-center.html">ガイドセンター</a>
+      <a class="dt-link" href="./demo-guide.html?demo=1">画面一覧へ</a>
+      <button class="dt-small-btn" id="replayButton" type="button">操作ガイドを開始</button>
+    </div>
+  </header>
+  <main class="dt-stage" id="stage">
+    <iframe class="dt-frame" id="tutorialFrame" title="DPRO実画面" referrerpolicy="same-origin"></iframe>
+    <div class="dt-highlight" id="targetHighlight" aria-hidden="true"></div>
+  </main>
+</div>
+<section class="dt-card" id="tutorialCard" aria-live="polite" aria-label="操作ガイド">
+  <header class="dt-drag" id="dragHandle" tabindex="0" aria-label="説明カード移動ハンドル。矢印キーでも移動できます">
+    <span class="dt-grip" aria-hidden="true">⋮⋮</span><span class="dt-step-label" id="stepLabel">STEP 1 / 10</span>
+    <button class="dt-close" id="closeButton" type="button" aria-label="操作ガイドを閉じる">×</button>
+  </header>
+  <div class="dt-body">
+    <span class="dt-role" id="roleLabel"></span>
+    <h1 id="stepTitle"></h1>
+    <p class="dt-copy" id="stepBody"></p>
+    <div class="dt-fallback" id="fallbackBox" hidden></div>
+    <div class="dt-safe">このガイドは画面説明と安全なページ移動だけを行います。送信・保存・状態変更・写真アップロード等は自動実行しません。</div>
+    <div class="dt-progress"><span id="progressBar"></span></div>
+  </div>
+  <footer class="dt-actions">
+    <button class="dt-btn dt-skip" id="skipButton" type="button">スキップ</button>
+    <button class="dt-btn" id="backButton" type="button">戻る</button>
+    <button class="dt-btn primary" id="nextButton" type="button">次へ</button>
+  </footer>
+</section>
+<button class="dt-resume" id="resumeButton" type="button" hidden>操作ガイドを再開</button>
+<script src="./tutorial-content.js"></script>
+<script src="./tutorial.js"></script>
+</body>
+</html>
